@@ -2,19 +2,41 @@
 
 ## Running Tests
 
-To run the card module tests, you need Lua installed on your system.
+Tests are run using Love2D:
 
 ```bash
-# Run card tests
-lua tests/card_test.lua
+# From project root
+love tests
 
-# Or with lua5.1/lua5.3 if that's what you have
-lua5.1 tests/card_test.lua
+# Or with console output (Windows)
+love tests --console
 ```
+
+## Test Files
+
+- `main.lua` - Test runner for Love2D
+- `conf.lua` - Love2D configuration for tests
+- `card_test_love.lua` - Unit tests for card module (40 tests)
+- `card_test.lua` - Legacy Lua tests (deprecated, use Love2D)
+
+## Test Results
+
+**Card Module Tests: ✓ 40/40 passed**
+
+- Suit enum tests: 4/4 ✓
+- Rank enum tests: 13/13 ✓
+- createCard tests: 3/3 ✓
+- toString tests: 4/4 ✓
+- equals tests: 3/3 ✓
+- beats tests (same suit): 2/2 ✓
+- beats tests (trump): 2/2 ✓
+- beats tests (deuce beats ace): 2/2 ✓
+- beats tests (rank calculation): 3/3 ✓
+- findCardInHand tests: 4/4 ✓
 
 ## Test Coverage
 
-### card_test.lua
+### card_test_love.lua
 Tests for the card module (src/card.lua):
 - Suit enum values (SPADES, DIAMONDS, CLUBS, HEARTS)
 - Rank enum values (ACE through KING)
