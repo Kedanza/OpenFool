@@ -1,51 +1,48 @@
 -- Love2D Test Runner
 -- Run with: love tests/
 
--- Test results
-local tests_passed = 0
-local tests_failed = 0
-local test_output = {}
+-- Global test counters
+passedTests = 0
+failedTests = 0
+totalTests = 0
+test_output = {}
 
--- Simple assertion helpers
-local function assert_equal(actual, expected, test_name)
-    if actual == expected then
-        tests_passed = tests_passed + 1
-        table.insert(test_output, "✓ " .. test_name)
+-- Global assert function that counts tests
+function assert(condition, message)
+    totalTests = totalTests + 1
+    if condition then
+        passedTests = passedTests + 1
+        print("✓ " .. message)
+        table.insert(test_output, "✓ " .. message)
     else
-        tests_failed = tests_failed + 1
-        table.insert(test_output, "✗ " .. test_name)
-        table.insert(test_output, "  Expected: " .. tostring(expected))
-        table.insert(test_output, "  Got: " .. tostring(actual))
+        failedTests = failedTests + 1
+        print("✗ " .. message)
+        table.insert(test_output, "✗ " .. message)
     end
 end
 
-local function assert_true(condition, test_name)
-    assert_equal(condition, true, test_name)
+-- Backward compatibility wrappers for old test format
+function assert_equal(actual, expected, message)
+    assert(actual == expected, message)
 end
 
-local function assert_false(condition, test_name)
-    assert_equal(condition, false, test_name)
+function assert_true(condition, message)
+    assert(condition == true, message)
 end
 
-local function assert_not_nil(value, test_name)
-    if value ~= nil then
-        tests_passed = tests_passed + 1
-        table.insert(test_output, "✓ " .. test_name)
-    else
-        tests_failed = tests_failed + 1
-        table.insert(test_output, "✗ " .. test_name)
-        table.insert(test_output, "  Expected: not nil")
-        table.insert(test_output, "  Got: nil")
-    end
+function assert_false(condition, message)
+    assert(condition == false, message)
 end
 
--- Export test helpers
+function assert_not_nil(value, message)
+    assert(value ~= nil, message)
+end
+
+-- Export for old tests
 _G.assert_equal = assert_equal
 _G.assert_true = assert_true
 _G.assert_false = assert_false
 _G.assert_not_nil = assert_not_nil
-_G.tests_passed = function() return tests_passed end
-_G.tests_failed = function() return tests_failed end
 _G.test_output = test_output
 
 function love.load()
@@ -81,23 +78,22 @@ function love.load()
     -- Run Player tests
     require("player_test_love")
     
+    -- Run GameState tests
+    require("gamestate_test_love")
+    
     -- Print results
-    print("\n=== Test Results ===")
-    for _, line in ipairs(test_output) do
-        print(line)
-    end
+    print("\n" .. string.rep("=", 50))
+    print(string.format("Passed: %d, Failed: %d, Total: %d", 
+        passedTests, failedTests, totalTests))
     
-    print(string.format("\nPassed: %d", tests_passed))
-    print(string.format("Failed: %d", tests_failed))
-    print(string.format("Total: %d", tests_passed + tests_failed))
-    
-    if tests_failed == 0 then
-        print("\n✓ All tests passed!")
+    if failedTests == 0 then
+        print("✓ All tests passed!")
         love.event.quit(0)
     else
-        print("\n✗ Some tests failed!")
+        print("✗ Some tests failed")
         love.event.quit(1)
     end
+    print(string.rep("=", 50))
 end
 
 function love.draw()
