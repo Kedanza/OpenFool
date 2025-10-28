@@ -11,14 +11,14 @@ local function assert_nil(value, message)
     if value ~= nil then
         error(string.format("%s\n  Expected: nil\n  Got: %s", message, tostring(value)))
     end
-    _G.assert_true(true, message) -- Count the test
+    _G.assert(true, message) -- Count the test
 end
 
 -- Test 1: Constants validation
 print("\n-- Throw Additional Constants Tests --")
 
-assert_equal(aiThrow.PENALTY_BASE, 1200, "PENALTY_BASE should be 1200")
-assert_equal(aiThrow.PENALTY_DELTA, 50, "PENALTY_DELTA should be 50")
+assert(aiThrow.PENALTY_BASE == 1200, "PENALTY_BASE should be 1200")
+assert(aiThrow.PENALTY_DELTA == 50, "PENALTY_DELTA should be 50")
 
 -- Test 2: No matching ranks - should return nil (done)
 print("\n-- aiThrowOrDone No Matching Ranks --")
@@ -56,7 +56,7 @@ result = aiThrow.aiThrowOrDone(hand, attackCards, defenseCards, trumpSuit, cards
 -- With cardsRemaining=0, penalty is 1200. Strong hand with pair of ACEs, throwing weak 6 might still be done
 -- This is a strategic decision by the AI
 if result then
-    assert_equal(result.rank, card.Rank.SIX, "If throwing, should throw the 6")
+    assert(result.rank == card.Rank.SIX, "If throwing, should throw the 6")
 end
 
 -- Test 4: Beneficial to throw - should return card
@@ -75,9 +75,9 @@ playerHands = {3, 6, 6}
 lowestRank = card.Rank.SIX
 
 result = aiThrow.aiThrowOrDone(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank)
-assert_not_nil(result, "Should throw when beneficial")
+assert(result ~= nil, "Should throw when beneficial")
 if result then
-    assert_equal(result.rank, card.Rank.SIX, "Should throw one of the 6s")
+    assert(result.rank == card.Rank.SIX, "Should throw one of the 6s")
 end
 
 -- Test 5: Multiple matching ranks - choose best
@@ -103,7 +103,7 @@ lowestRank = card.Rank.SIX
 
 result = aiThrow.aiThrowOrDone(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank)
 if result then
-    assert_true(result.rank == card.Rank.SIX or result.rank == card.Rank.SEVEN,
+    assert(result.rank == card.Rank.SIX or result.rank == card.Rank.SEVEN,
         string.format("Should throw 6 or 7, got rank %d", result.rank))
 end
 
@@ -147,7 +147,7 @@ result = aiThrow.aiThrowOrDone(hand, attackCards, defenseCards, trumpSuit, cards
 if result then
     -- AI will evaluate both options - triple gets bonus but singleton might leave better hand
     -- Both are valid strategic choices
-    assert_true(result.rank == card.Rank.SIX or result.rank == card.Rank.SEVEN,
+    assert(result.rank == card.Rank.SIX or result.rank == card.Rank.SEVEN,
         string.format("Should throw 6 or 7, got rank %d", result.rank))
 end
 
@@ -169,7 +169,7 @@ result = aiThrow.aiThrowOrDone(hand, attackCards, defenseCards, trumpSuit, cards
 -- In endgame, penalty is higher (1200) so AI is more conservative about throwing
 -- Result depends on hand evaluation
 if result then
-    assert_equal(result.rank, card.Rank.SIX, "If throwing in endgame, should throw matching rank")
+    assert(result.rank == card.Rank.SIX, "If throwing in endgame, should throw matching rank")
 end
 
 -- Test 9: Ranks present in both attack and defense
@@ -189,7 +189,7 @@ lowestRank = card.Rank.SIX
 result = aiThrow.aiThrowOrDone(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank)
 -- Both 9 and 10 are present, AI can throw either
 if result then
-    assert_true(result.rank == card.Rank.NINE or result.rank == card.Rank.TEN,
+    assert(result.rank == card.Rank.NINE or result.rank == card.Rank.TEN,
         string.format("Should throw 9 or 10, got rank %d", result.rank))
 end
 
@@ -235,7 +235,7 @@ lowestRank = card.Rank.SIX
 
 result = aiThrow.aiThrowOrDone(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank)
 if result then
-    assert_true(result.rank == card.Rank.SIX or result.rank == card.Rank.SEVEN,
+    assert(result.rank == card.Rank.SIX or result.rank == card.Rank.SEVEN,
         string.format("Should throw 6 or 7, got rank %d", result.rank))
 end
 

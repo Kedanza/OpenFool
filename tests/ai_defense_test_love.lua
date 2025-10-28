@@ -12,11 +12,11 @@ local hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, l
 -- Constants Tests
 print("-- Defense Constants Tests --")
 
-assert_equal(aiDefense.RANK_PRESENT_BONUS, 300, "RANK_PRESENT_BONUS should be 300")
-assert_equal(aiDefense.PENALTY, 800, "PENALTY should be 800")
-assert_equal(aiDefense.TAKE_PENALTY_BASE, 2000, "TAKE_PENALTY_BASE should be 2000")
-assert_equal(aiDefense.TAKE_PENALTY_DELTA, 40, "TAKE_PENALTY_DELTA should be 40")
-assert_equal(aiDefense.PASS_PENALTY, -400, "PASS_PENALTY should be -400")
+assert(aiDefense.RANK_PRESENT_BONUS == 300, "RANK_PRESENT_BONUS should be 300")
+assert(aiDefense.PENALTY == 800, "PENALTY should be 800")
+assert(aiDefense.TAKE_PENALTY_BASE == 2000, "TAKE_PENALTY_BASE should be 2000")
+assert(aiDefense.TAKE_PENALTY_DELTA == 40, "TAKE_PENALTY_DELTA should be 40")
+assert(aiDefense.PASS_PENALTY == -400, "PASS_PENALTY should be -400")
 
 -- Test 1: No attack to beat
 print("\n-- aiTryBeat Edge Cases --")
@@ -31,7 +31,7 @@ lowestRank = card.Rank.SIX
 deuceBeatsAce = false
 
 result = aiDefense.aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
-assert_equal(result, nil, "No attack should return nil")
+assert(result == nil, "No attack should return nil")
 
 -- Test 2: Can't beat attack - must take
 print("\n-- aiTryBeat Cannot Beat --")
@@ -46,7 +46,7 @@ lowestRank = card.Rank.SIX
 deuceBeatsAce = false
 
 result = aiDefense.aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
-assert_equal(result, nil, "Cannot beat attack - should return nil (take)")
+assert(result == nil, "Cannot beat attack - should return nil (take)")
 
 -- Test 3: Can beat - simple case
 print("\n-- aiTryBeat Simple Beat --")
@@ -61,9 +61,9 @@ lowestRank = card.Rank.SIX
 deuceBeatsAce = false
 
 result = aiDefense.aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
-assert_not_nil(result, "Should beat when possible and beneficial")
+assert(result ~= nil, "Should beat when possible and beneficial")
 if result then
-    assert_equal(result.rank, card.Rank.KING, "Should return the King")
+    assert(result.rank == card.Rank.KING, "Should return the King")
 end
 
 -- Test 4: Trump beats non-trump
@@ -82,10 +82,10 @@ lowestRank = card.Rank.SIX
 deuceBeatsAce = false
 
 result = aiDefense.aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
-assert_not_nil(result, "Should beat with trump")
+assert(result ~= nil, "Should beat with trump")
 if result then
     -- AI should prefer the ACE (same suit, higher) over trump since it's less valuable
-    assert_true(result.suit == card.Suit.SPADES or result.suit == card.Suit.HEARTS,
+    assert(result.suit == card.Suit.SPADES or result.suit == card.Suit.HEARTS,
         string.format("Should beat with trump or ACE, got suit %d", result.suit))
 end
 
@@ -107,7 +107,7 @@ deuceBeatsAce = false
 result = aiDefense.aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
 if result then
     -- Either card can beat, but NINE gets bonus so might be preferred
-    assert_true(result.rank == card.Rank.NINE or result.rank == card.Rank.TEN,
+    assert(result.rank == card.Rank.NINE or result.rank == card.Rank.TEN,
         string.format("Should beat with 9 or 10, got rank %d", result.rank))
 end
 
@@ -125,7 +125,7 @@ deuceBeatsAce = false
 
 result = aiDefense.aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
 -- In endgame with no cards left, can't beat 7 with 6
-assert_equal(result, nil, "Cannot beat 7 with 6 even in endgame")
+assert(result == nil, "Cannot beat 7 with 6 even in endgame")
 
 -- Test 7: Endgame - beat when can
 hand = {card.createCard(card.Suit.HEARTS, card.Rank.KING)}  -- Strong card
@@ -135,7 +135,7 @@ cardsRemaining = 0  -- ENDGAME
 playerHands = {1, 0, 0}
 
 result = aiDefense.aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
-assert_not_nil(result, "Should beat in endgame when possible")
+assert(result ~= nil, "Should beat in endgame when possible")
 
 -- Test 8: Multiple cards can beat - choose best
 print("\n-- aiTryBeat Multiple Options --")
@@ -154,9 +154,9 @@ lowestRank = card.Rank.SIX
 deuceBeatsAce = false
 
 result = aiDefense.aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
-assert_not_nil(result, "Should choose one card to beat with")
+assert(result ~= nil, "Should choose one card to beat with")
 if result then
-    assert_true(result.rank >= card.Rank.JACK, "Should use one of the available cards")
+    assert(result.rank >= card.Rank.JACK, "Should use one of the available cards")
 end
 
 -- Test 9: Taking is better - refuse to beat
@@ -181,7 +181,7 @@ deuceBeatsAce = false
 
 result = aiDefense.aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
 -- Result depends on complex evaluation - just check it returns something valid
-assert_true(result == nil or (result.rank and result.suit), "Should return valid card or nil")
+assert(result == nil or (result.rank and result.suit), "Should return valid card or nil")
 
 -- Test 10: DeuceBeatsAce rule
 print("\n-- aiTryBeat DeuceBeatsAce --")
@@ -196,9 +196,9 @@ lowestRank = card.Rank.TWO
 deuceBeatsAce = true  -- Special rule enabled
 
 result = aiDefense.aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
-assert_not_nil(result, "Deuce should beat ACE when rule is enabled")
+assert(result ~= nil, "Deuce should beat ACE when rule is enabled")
 if result then
-    assert_equal(result.rank, card.Rank.TWO, "Should use the deuce")
+    assert(result.rank == card.Rank.TWO, "Should use the deuce")
 end
 
 -- Test 11: DeuceBeatsAce disabled
@@ -208,7 +208,7 @@ defenseCards = {nil}
 deuceBeatsAce = false  -- Rule disabled
 
 result = aiDefense.aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
-assert_equal(result, nil, "Deuce cannot beat ACE when rule is disabled")
+assert(result == nil, "Deuce cannot beat ACE when rule is disabled")
 
 -- Test 12: Complex multi-attack scenario
 print("\n-- aiTryBeat Complex Scenario --")
@@ -236,9 +236,9 @@ lowestRank = card.Rank.SIX
 deuceBeatsAce = false
 
 result = aiDefense.aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
-assert_not_nil(result, "Should find a card to beat the 8 of diamonds")
+assert(result ~= nil, "Should find a card to beat the 8 of diamonds")
 if result then
-    assert_true(result:beats(attackCards[2], trumpSuit, deuceBeatsAce), "Returned card should actually beat the attack")
+    assert(result:beats(attackCards[2], trumpSuit, deuceBeatsAce), "Returned card should actually beat the attack")
 end
 
 print("\n=== AI Defense Tests Complete ===")

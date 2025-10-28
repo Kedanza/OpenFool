@@ -1,7 +1,7 @@
 -- tests/gamestate_test_love.lua
 -- Tests for the game state management system
 
-local GameStateModule = require("../src/gamestate")
+local GameStateModule = require("gamestate")
 local GameState = GameStateModule.GameState
 local createGameStateManager = GameStateModule.createGameStateManager
 

@@ -5,7 +5,6 @@
 passedTests = 0
 failedTests = 0
 totalTests = 0
-test_output = {}
 
 -- Global assert function that counts tests
 function assert(condition, message)
@@ -13,37 +12,11 @@ function assert(condition, message)
     if condition then
         passedTests = passedTests + 1
         print("✓ " .. message)
-        table.insert(test_output, "✓ " .. message)
     else
         failedTests = failedTests + 1
         print("✗ " .. message)
-        table.insert(test_output, "✗ " .. message)
     end
 end
-
--- Backward compatibility wrappers for old test format
-function assert_equal(actual, expected, message)
-    assert(actual == expected, message)
-end
-
-function assert_true(condition, message)
-    assert(condition == true, message)
-end
-
-function assert_false(condition, message)
-    assert(condition == false, message)
-end
-
-function assert_not_nil(value, message)
-    assert(value ~= nil, message)
-end
-
--- Export for old tests
-_G.assert_equal = assert_equal
-_G.assert_true = assert_true
-_G.assert_false = assert_false
-_G.assert_not_nil = assert_not_nil
-_G.test_output = test_output
 
 function love.load()
     print("\n=== Love2D Test Runner ===\n")
