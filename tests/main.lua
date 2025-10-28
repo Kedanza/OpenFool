@@ -66,6 +66,9 @@ function love.load()
     -- Run performance tests
     require("ai_evaluation_performance_test_love")
     
+    -- Run AI attack tests
+    require("ai_attack_test_love")
+    
     -- Print results
     print("\n=== Test Results ===")
     for _, line in ipairs(test_output) do

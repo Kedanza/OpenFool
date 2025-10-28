@@ -24,8 +24,9 @@ love tests --console
 **Card Module Tests: ✓ 40/40 passed**
 **Deck Module Tests: ✓ 40/40 passed**
 **AI Evaluation Module Tests: ✓ 24/24 passed**
+**AI Attack Module Tests: ✓ 24/24 passed**
 **Performance Tests: ✓ EXCELLENT**
-**Total: ✓ 104/104 passed**
+**Total: ✓ 128/128 passed**
 
 ### Performance Metrics
 - **Throughput:** 173,896 evaluations/second
