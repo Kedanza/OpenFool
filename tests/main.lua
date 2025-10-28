@@ -75,6 +75,9 @@ function love.load()
     -- Run AI throw additional tests
     require("ai_throw_additional_test_love")
     
+    -- Run RuleSet tests
+    require("ruleset_test_love")
+    
     -- Print results
     print("\n=== Test Results ===")
     for _, line in ipairs(test_output) do
