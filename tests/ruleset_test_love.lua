@@ -6,28 +6,6 @@ local card = require("card")
 
 print("\n=== RuleSet Module Tests ===")
 
--- Helper function for assertions
-local function assert_equal(actual, expected, message)
-    if actual ~= expected then
-        error(string.format("%s\n  Expected: %s\n  Got: %s", message, tostring(expected), tostring(actual)))
-    end
-    print("✓ " .. message)
-end
-
-local function assert_true(condition, message)
-    if not condition then
-        error(message)
-    end
-    print("✓ " .. message)
-end
-
-local function assert_false(condition, message)
-    if condition then
-        error(message)
-    end
-    print("✓ " .. message)
-end
-
 -- Test 1: Default RuleSet creation
 print("\n-- Default RuleSet Tests --")
 

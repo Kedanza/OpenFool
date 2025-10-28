@@ -6,33 +6,12 @@ local aiThrow = require("ai_throw_additional")
 
 print("\n=== AI Throw Additional Module Tests ===")
 
--- Helper function for assertions
-local function assert_equal(actual, expected, message)
-    if actual ~= expected then
-        error(string.format("%s\n  Expected: %s\n  Got: %s", message, tostring(expected), tostring(actual)))
-    end
-    print("✓ " .. message)
-end
-
-local function assert_not_nil(value, message)
-    if value == nil then
-        error(string.format("%s\n  Expected: not nil\n  Got: nil", message))
-    end
-    print("✓ " .. message)
-end
-
+-- Helper function for nil assertions (not in global scope)
 local function assert_nil(value, message)
     if value ~= nil then
         error(string.format("%s\n  Expected: nil\n  Got: %s", message, tostring(value)))
     end
-    print("✓ " .. message)
-end
-
-local function assert_true(condition, message)
-    if not condition then
-        error(message)
-    end
-    print("✓ " .. message)
+    _G.assert_true(true, message) -- Count the test
 end
 
 -- Test 1: Constants validation
