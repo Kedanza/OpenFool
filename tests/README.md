@@ -23,7 +23,15 @@ love tests --console
 
 **Card Module Tests: ✓ 40/40 passed**
 **Deck Module Tests: ✓ 40/40 passed**
-**Total: ✓ 80/80 passed**
+**AI Evaluation Module Tests: ✓ 24/24 passed**
+**Performance Tests: ✓ EXCELLENT**
+**Total: ✓ 104/104 passed**
+
+### Performance Metrics
+- **Throughput:** 173,896 evaluations/second
+- **Average Time:** 0.0058 ms per evaluation
+- **Memory Usage:** Excellent (no leaks detected)
+- **Stress Test:** 10,000 evaluations in 0.058 seconds
 
 ### Card Tests
 - Suit enum tests: 4/4 ✓
@@ -48,6 +56,14 @@ love tests --console
 - Full deck composition tests: 13/13 ✓
 - Suit distribution tests: 4/4 ✓
 
+### AI Evaluation Tests
+
+- Constants tests: 4/4 ✓
+- Rank bonuses tests: 5/5 ✓
+- getRelativeCardValue tests (36-card): 5/5 ✓
+- getRelativeCardValue tests (52-card): 3/3 ✓
+- evaluateHand tests: 7/7 ✓
+
 ## Test Coverage
 
 ### card_test_love.lua
@@ -71,5 +87,18 @@ Tests for the deck module (src/deck.lua):
 - reset() method to recreate and reshuffle deck
 - Deck composition validation (correct ranks and suits)
 - Edge cases (empty deck, drawing all cards)
+
+### ai_evaluation_test_love.lua
+
+Tests for the AI evaluation module (src/ai_evaluation.lua):
+- Constants validation (RANK_MULTIPLIER, UNBALANCED_HAND_PENALTY, etc.)
+- Rank bonuses array for pairs/triples/quads
+- getRelativeCardValue() with different deck sizes (24, 32, 36, 52 cards)
+- evaluateHand() with various scenarios:
+  - Empty hands and out-of-play detection
+  - Trump cards and bonuses
+  - Multiple rank bonuses (pairs, triples)
+  - Suit balance penalties
+  - Card ratio calculations
 
 All tests validate that the Lua implementation matches the original Kotlin behavior from Card.kt, Suit.kt, Rank.kt, and Deck.kt.

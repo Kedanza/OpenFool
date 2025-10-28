@@ -60,6 +60,12 @@ function love.load()
     -- Run deck tests
     require("deck_test_love")
     
+    -- Run AI evaluation tests
+    require("ai_evaluation_test_love")
+    
+    -- Run performance tests
+    require("ai_evaluation_performance_test_love")
+    
     -- Print results
     print("\n=== Test Results ===")
     for _, line in ipairs(test_output) do
