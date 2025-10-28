@@ -8,10 +8,11 @@ Systematische Migration der OpenFool Kotlin/libGDX Implementierung zu Lua/Love2D
 
 ## 🎯 Phase 1: Foundation (Kritischer Pfad)
 
-### Issue #1: Core Data Structures Migration
+### Issue #1: Core Data Structures Migration ✅
 **Priority:** CRITICAL ⭐⭐⭐⭐⭐  
 **Abhängigkeiten:** Keine  
-**Geschätzte Zeit:** 4-6 Stunden
+**Geschätzte Zeit:** 4-6 Stunden  
+**Status:** COMPLETED | Tests: 23/23 ✓
 
 **Beschreibung:**
 Migration der grundlegenden Datenstrukturen von Kotlin zu Lua:
@@ -21,24 +22,25 @@ Migration der grundlegenden Datenstrukturen von Kotlin zu Lua:
 - Basic card comparison logic (beats function)
 
 **Akzeptanzkriterien:**
-- [ ] Suit enum als Lua table implementiert
-- [ ] Rank enum als Lua table implementiert
-- [ ] createCard() factory function
-- [ ] card:beats() method implementiert
-- [ ] card:toString() method
-- [ ] card:equals() method
-- [ ] Unit tests für alle Kartenfunktionen
+- [x] Suit enum als Lua table implementiert
+- [x] Rank enum als Lua table implementiert
+- [x] createCard() factory function
+- [x] card:beats() method implementiert
+- [x] card:toString() method
+- [x] card:equals() method
+- [x] Unit tests für alle Kartenfunktionen
 
-**Dateien zu erstellen:**
+**Dateien erstellt:**
 - `src/card.lua`
-- `tests/card_test.lua`
+- `tests/card_test_love.lua`
 
 ---
 
-### Issue #2: Deck Management System
+### Issue #2: Deck Management System ✅
 **Priority:** CRITICAL ⭐⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #1 (Card System)  
-**Geschätzte Zeit:** 3-4 Stunden
+**Geschätzte Zeit:** 3-4 Stunden  
+**Status:** COMPLETED | Tests: 28/28 ✓
 
 **Beschreibung:**
 Implementierung des Deck-Management-Systems:
@@ -47,16 +49,16 @@ Implementierung des Deck-Management-Systems:
 - Karten-Ziehen mit Fehlerbehandlung
 
 **Akzeptanzkriterien:**
-- [ ] createDeck() factory function
-- [ ] deck:draw() method
-- [ ] deck:remaining() method  
-- [ ] deck:shuffle() method (Fisher-Yates)
-- [ ] Unterstützung für 24, 32, 36, 52 Karten-Decks
-- [ ] Unit tests für alle Deck-Operationen
+- [x] createDeck() factory function
+- [x] deck:draw() method
+- [x] deck:remaining() method  
+- [x] deck:shuffle() method (Fisher-Yates)
+- [x] Unterstützung für 24, 32, 36, 52 Karten-Decks
+- [x] Unit tests für alle Deck-Operationen
 
-**Dateien zu erstellen:**
+**Dateien erstellt:**
 - `src/deck.lua`
-- `tests/deck_test.lua`
+- `tests/deck_test_love.lua`
 
 ---
 
@@ -84,10 +86,11 @@ Implementierung des Spielzustands-Management-Systems:
 
 ---
 
-### Issue #4: RuleSet Configuration System
+### Issue #4: RuleSet Configuration System ✅
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Keine  
-**Geschätzte Zeit:** 3-4 Stunden
+**Geschätzte Zeit:** 3-4 Stunden  
+**Status:** COMPLETED | Tests: 59/59 ✓
 
 **Beschreibung:**
 Implementierung des konfigurierbaren Regelset-Systems:
@@ -96,25 +99,26 @@ Implementierung des konfigurierbaren Regelset-Systems:
 - Validation der Regel-Kombinationen
 
 **Akzeptanzkriterien:**
-- [ ] RuleSet table mit allen Optionen
-- [ ] RuleSet:getLowestRank() method
-- [ ] RuleSet:save() method
-- [ ] RuleSet:load() method
-- [ ] Regel-Validation (z.B. teamPlay nur bei 4+ Spielern)
-- [ ] Default-Einstellungen
+- [x] RuleSet table mit allen Optionen
+- [x] RuleSet:getLowestRank() method
+- [x] RuleSet:save() method
+- [x] RuleSet:load() method
+- [x] Regel-Validation (z.B. teamPlay nur bei 4+ Spielern)
+- [x] Default-Einstellungen
 
-**Dateien zu erstellen:**
+**Dateien erstellt:**
 - `src/ruleset.lua`
-- `tests/ruleset_test.lua`
+- `tests/ruleset_test_love.lua`
 
 ---
 
 ## 🎯 Phase 2: Core Game Logic
 
-### Issue #5: Player System Implementation
+### Issue #5: Player System Implementation ✅
 **Priority:** CRITICAL ⭐⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #1 (Card System), Issue #4 (RuleSet)  
-**Geschätzte Zeit:** 4-5 Stunden
+**Geschätzte Zeit:** 4-5 Stunden  
+**Status:** COMPLETED | Tests: 55/55 ✓
 
 **Beschreibung:**
 Implementierung des Spieler-Systems:
@@ -123,23 +127,26 @@ Implementierung des Spieler-Systems:
 - Basis-Funktionen für Handverwaltung
 
 **Akzeptanzkriterien:**
-- [ ] createPlayer() factory function
-- [ ] player:addCard() method
-- [ ] player:sortCards() method (alle Modi)
-- [ ] player:removeCard() method
-- [ ] findCardInHand() utility function
-- [ ] Hand-Größen-Validation
+- [x] createPlayer() factory function
+- [x] player:addCard() method
+- [x] player:sortCards() method (alle Modi)
+- [x] player:removeCard() method
+- [x] findCardInHand() utility function
+- [x] Hand-Größen-Validation
 
-**Dateien zu erstellen:**
+**Dateien erstellt:**
 - `src/player.lua`
-- `tests/player_test.lua`
+- `tests/player_test_love.lua`
+
+**Hinweis:** Lua-spezifisches Problem gelöst - Arrays mit allen nil-Werten haben `#array == 0`, daher wird feste Arraygröße (6) verwendet statt dynamischer Länge.
 
 ---
 
-### Issue #6: AI Evaluation System - Hand Value Calculation
+### Issue #6: AI Evaluation System - Hand Value Calculation ✅
 **Priority:** CRITICAL ⭐⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #1 (Card), Issue #4 (RuleSet), Issue #5 (Player)  
-**Geschätzte Zeit:** 6-8 Stunden
+**Geschätzte Zeit:** 6-8 Stunden  
+**Status:** COMPLETED | Tests: 37/37 ✓
 
 **Beschreibung:**
 Implementierung des komplexen KI-Bewertungssystems:
@@ -148,26 +155,27 @@ Implementierung des komplexen KI-Bewertungssystems:
 - Komplexe Scoring-Algorithmen
 
 **Akzeptanzkriterien:**
-- [ ] getRelativeCardValue() function
-- [ ] evaluateHand() function mit allen Faktoren:
-  - [ ] Basis-Kartenwerte
-  - [ ] Trump-Bonuses
-  - [ ] Mehrfach-Rang-Bonuses
-  - [ ] Farb-Balance-Strafen
-  - [ ] Zu-viele-Karten-Strafen
-- [ ] Umfangreiche Unit Tests für alle Szenarien
-- [ ] Performance-Optimierung
+- [x] getRelativeCardValue() function
+- [x] evaluateHand() function mit allen Faktoren:
+  - [x] Basis-Kartenwerte
+  - [x] Trump-Bonuses
+  - [x] Mehrfach-Rang-Bonuses
+  - [x] Farb-Balance-Strafen
+  - [x] Zu-viele-Karten-Strafen
+- [x] Umfangreiche Unit Tests für alle Szenarien
+- [x] Performance-Optimierung
 
-**Dateien zu erstellen:**
+**Dateien erstellt:**
 - `src/ai_evaluation.lua`
-- `tests/ai_evaluation_test.lua`
+- `tests/ai_evaluation_test_love.lua`
 
 ---
 
-### Issue #7: AI Decision Making - Attack Logic
+### Issue #7: AI Decision Making - Attack Logic ✅
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #6 (AI Evaluation)  
-**Geschätzte Zeit:** 4-5 Stunden
+**Geschätzte Zeit:** 4-5 Stunden  
+**Status:** COMPLETED | Tests: 44/44 ✓
 
 **Beschreibung:**
 Implementierung der KI-Angriffs-Logik:
@@ -176,22 +184,23 @@ Implementierung der KI-Angriffs-Logik:
 - Hand-Optimierung
 
 **Akzeptanzkriterien:**
-- [ ] aiStartTurn() function
-- [ ] Rang-Zählung und Bonus-Berechnung
-- [ ] Hand-Simulation ohne geworfene Karte
-- [ ] Optimale Karten-Auswahl
-- [ ] Edge-Case-Behandlung
+- [x] aiStartTurn() function
+- [x] Rang-Zählung und Bonus-Berechnung
+- [x] Hand-Simulation ohne geworfene Karte
+- [x] Optimale Karten-Auswahl
+- [x] Edge-Case-Behandlung
 
-**Dateien zu erstellen:**
+**Dateien erstellt:**
 - `src/ai_attack.lua`
-- `tests/ai_attack_test.lua`
+- `tests/ai_attack_test_love.lua`
 
 ---
 
-### Issue #8: AI Decision Making - Defense Logic
+### Issue #8: AI Decision Making - Defense Logic ✅
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #6 (AI Evaluation)  
-**Geschätzte Zeit:** 5-6 Stunden
+**Geschätzte Zeit:** 5-6 Stunden  
+**Status:** COMPLETED | Tests: 17/17 ✓
 
 **Beschreibung:**
 Implementierung der KI-Verteidigungs-Logik:
@@ -200,22 +209,23 @@ Implementierung der KI-Verteidigungs-Logik:
 - Rang-Präsenz-Bonuses
 
 **Akzeptanzkriterien:**
-- [ ] aiTryBeat() function
-- [ ] Karten-Schlag-Validation
-- [ ] Rang-Präsenz-Bonus-Berechnung
-- [ ] Schlagen-vs-Nehmen Entscheidung
-- [ ] Endspiel-Logik (cardsRemaining = 0)
+- [x] aiTryBeat() function
+- [x] Karten-Schlag-Validation
+- [x] Rang-Präsenz-Bonus-Berechnung
+- [x] Schlagen-vs-Nehmen Entscheidung
+- [x] Endspiel-Logik (cardsRemaining = 0)
 
-**Dateien zu erstellen:**
+**Dateien erstellt:**
 - `src/ai_defense.lua`
-- `tests/ai_defense_test.lua`
+- `tests/ai_defense_test_love.lua`
 
 ---
 
-### Issue #9: AI Decision Making - Throw Additional Cards
+### Issue #9: AI Decision Making - Throw Additional Cards ✅
 **Priority:** MEDIUM ⭐⭐⭐  
 **Abhängigkeiten:** Issue #6 (AI Evaluation)  
-**Geschätzte Zeit:** 3-4 Stunden
+**Geschätzte Zeit:** 3-4 Stunden  
+**Status:** COMPLETED | Tests: 13/13 ✓
 
 **Beschreibung:**
 Implementierung der KI-Logik für Nachwerfen:
@@ -224,14 +234,14 @@ Implementierung der KI-Logik für Nachwerfen:
 - Optimale Auswahl basierend auf Hand-Bewertung
 
 **Akzeptanzkriterien:**
-- [ ] aiThrowOrDone() function
-- [ ] Rang-Matching-Validation
-- [ ] Wurf-vs-Fertig Entscheidung
-- [ ] Mehrfach-Rang-Prioritäten
+- [x] aiThrowOrDone() function
+- [x] Rang-Matching-Validation
+- [x] Wurf-vs-Fertig Entscheidung
+- [x] Mehrfach-Rang-Prioritäten
 
-**Dateien zu erstellen:**
+**Dateien erstellt:**
 - `src/ai_throw_additional.lua`
-- `tests/ai_throw_additional_test.lua`
+- `tests/ai_throw_additional_test_love.lua`
 
 ---
 

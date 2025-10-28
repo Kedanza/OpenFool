@@ -12,6 +12,8 @@ love tests
 love tests --console
 ```
 
+For detailed information on writing and organizing tests, see **[TEST_GUIDELINES.md](TEST_GUIDELINES.md)**.
+
 ## Test Files
 
 - `main.lua` - Test runner for Love2D
