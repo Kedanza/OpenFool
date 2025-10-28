@@ -57,6 +57,9 @@ function love.load()
     -- Run card tests
     require("card_test_love")
     
+    -- Run deck tests
+    require("deck_test_love")
+    
     -- Print results
     print("\n=== Test Results ===")
     for _, line in ipairs(test_output) do
