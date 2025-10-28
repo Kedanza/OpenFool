@@ -28,7 +28,8 @@ love tests --console
 **AI Defense Module Tests: ✓ 17/17 passed**
 **AI Throw Additional Module Tests: ✓ 13/13 passed**
 **RuleSet Module Tests: ✓ 59/59 passed**
-**Total: ✓ 221/221 passed**
+**Player Module Tests: ✓ 55/55 passed**
+**Total: ✓ 276/276 passed**
 
 ### Performance Metrics
 - **Throughput:** 173,896 evaluations/second

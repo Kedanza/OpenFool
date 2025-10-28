@@ -78,6 +78,9 @@ function love.load()
     -- Run RuleSet tests
     require("ruleset_test_love")
     
+    -- Run Player tests
+    require("player_test_love")
+    
     -- Print results
     print("\n=== Test Results ===")
     for _, line in ipairs(test_output) do
