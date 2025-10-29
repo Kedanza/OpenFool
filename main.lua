@@ -26,6 +26,10 @@ function love.load()
         print("WARNING: Some assets failed to load!")
     end
     
+    -- Initialize rendering system
+    local Rendering = require("src.rendering")
+    Rendering.initialize()
+    
     -- Create new game instance
     game = Game.new()
     
