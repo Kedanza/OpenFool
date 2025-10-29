@@ -122,6 +122,7 @@ Implementierung des konfigurierbaren Regelset-Systems:
 ## 🎯 Phase 2: Core Game Logic
 
 ### Issue #5: Player System Implementation ✅
+**GitHub Issue:** [#7](https://github.com/Kedanza/OpenFool/issues/7)  
 **Priority:** CRITICAL ⭐⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #1 (Card System), Issue #4 (RuleSet)  
 **Geschätzte Zeit:** 4-5 Stunden  
@@ -399,6 +400,7 @@ Implementierung des Asset-Loading-Systems:
 ---
 
 ### Issue #15: Basic Rendering System
+**GitHub Issue:** [#15](https://github.com/Kedanza/OpenFool/issues/15)  
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #14 (Asset Loading)  
 **Geschätzte Zeit:** 4-5 Stunden
@@ -507,6 +509,7 @@ Integration aller Komponenten in den Haupt-Game-Loop:
 ---
 
 ### Issue #19: Menu System
+**GitHub Issue:** [#19](https://github.com/Kedanza/OpenFool/issues/19)  
 **Priority:** MEDIUM ⭐⭐⭐  
 **Abhängigkeiten:** Issue #13 (Project Structure), Issue #15 (Rendering)  
 **Geschätzte Zeit:** 4-5 Stunden
@@ -532,6 +535,7 @@ Implementierung eines einfachen Menü-Systems:
 ---
 
 ### Issue #20: Testing and Polish
+**GitHub Issue:** [#20](https://github.com/Kedanza/OpenFool/issues/20)  
 **Priority:** MEDIUM ⭐⭐⭐  
 **Abhängigkeiten:** Issue #18 (Game Integration)  
 **Geschätzte Zeit:** 6-8 Stunden
@@ -554,6 +558,36 @@ Umfangreiche Tests und Feinschliff:
 **Dateien zu prüfen:**
 - Alle `src/*.lua` files
 - Alle `tests/*.lua` files
+
+---
+
+### Issue #21: Documentation and Project Finalization
+**GitHub Issue:** [#21](https://github.com/Kedanza/OpenFool/issues/21)  
+**Priority:** LOW ⭐⭐  
+**Abhängigkeiten:** Alle Issues abgeschlossen  
+**Geschätzte Zeit:** 3-4 Stunden
+
+**Beschreibung:**
+Vollständige Code-Dokumentation und Projekt-Finalisierung:
+- README.md aktualisieren
+- Code-Kommentare für alle Hauptmodule
+- API-Dokumentation
+- Entwickler-Guide
+- Changelog pflegen
+
+**Akzeptanzkriterien:**
+- [ ] README.md aktualisieren (Installation, Build, Run)
+- [ ] Code-Kommentare für alle Hauptmodule
+- [ ] API-Dokumentation erstellt
+- [ ] Entwickler-Guide geschrieben
+- [ ] CHANGELOG.md gepflegt
+- [ ] Lizenz geprüft
+
+**Dateien zu erstellen/aktualisieren:**
+- `README.md`
+- `docs/API.md`
+- `docs/DEVELOPER_GUIDE.md`
+- `CHANGELOG.md`
 
 ---
 
