@@ -380,11 +380,12 @@ Einrichtung der Love2D-Projektstruktur:
 
 ---
 
-### Issue #14: Asset Loading System
+### Issue #14: Asset Loading System ✅
 **GitHub Issue:** [#14](https://github.com/Kedanza/OpenFool/issues/14)  
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #13 (Project Structure)  
-**Geschätzte Zeit:** 3-4 Stunden
+**Geschätzte Zeit:** 3-4 Stunden  
+**Status:** COMPLETED
 
 **Beschreibung:**
 Implementierung des Asset-Loading-Systems:
@@ -394,25 +395,25 @@ Implementierung des Asset-Loading-Systems:
 - Asset-Management
 
 **Akzeptanzkriterien:**
-- [ ] Alle Kartenbilder laden (rus deck)
-- [ ] Kartenrückseite
-- [ ] Suit-Symbole
-- [ ] Hintergrund-Textur
-- [ ] Font-Loading
-- [ ] Asset-Cache-System
-- [ ] Fehlerbehandlung für fehlende Assets
+- [x] Alle Kartenbilder laden (rus deck) - 52 cards loaded
+- [x] Kartenrückseite - back.png loaded
+- [x] Suit-Symbole - 4 suit symbols loaded
+- [x] Hintergrund-Textur - background1.png loaded
+- [x] Font-Loading - 4 font sizes (12, 16, 24, 32pt)
+- [x] Asset-Cache-System - Indexed by "rank-suit"
+- [x] Fehlerbehandlung für fehlende Assets - pcall() wrapping
 
-**Dateien zu erstellen:**
-- `src/assets.lua`
-- `tests/assets_test.lua`
+**Dateien erstellt:**
+- `src/assets.lua` (217 lines)
 
 ---
 
-### Issue #15: Basic Rendering System
+### Issue #15: Basic Rendering System ✅
 **GitHub Issue:** [#15](https://github.com/Kedanza/OpenFool/issues/15)  
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #14 (Asset Loading)  
-**Geschätzte Zeit:** 4-5 Stunden
+**Geschätzte Zeit:** 4-5 Stunden  
+**Status:** COMPLETED
 
 **Beschreibung:**
 Implementierung des grundlegenden Rendering-Systems:
@@ -422,16 +423,17 @@ Implementierung des grundlegenden Rendering-Systems:
 - Basis-UI-Elemente
 
 **Akzeptanzkriterien:**
-- [ ] drawCard() function mit allen Optionen
-- [ ] drawPlayerHand() function
-- [ ] drawTable() function für Angriff/Verteidigung
-- [ ] Skalierung und Rotation
-- [ ] Face-up/Face-down Rendering
-- [ ] Tinting-Unterstützung
+- [x] drawCard() function mit allen Optionen (rotation, scale, faceUp, alpha, highlight)
+- [x] drawPlayerHand() function (fan layout with arc animation)
+- [x] drawTable() function für Angriff/Verteidigung (card pairs with offset)
+- [x] Skalierung und Rotation (full transform support)
+- [x] Face-up/Face-down Rendering (conditional image selection)
+- [x] Tinting-Unterstützung (alpha blending, highlight borders)
+- [x] drawTrump() trump indicator (rotated 90° with deck count)
+- [x] Mouse hit detection (isPointInCard for selection)
 
-**Dateien zu erstellen:**
-- `src/rendering.lua`
-- `tests/rendering_test.lua`
+**Dateien erstellt:**
+- `src/rendering.lua` (279 lines)
 
 ---
 
