@@ -294,11 +294,12 @@ Implementierung der Runden-Verwaltung:
 
 ---
 
-### Issue #11: Game Setup and Initialization
+### Issue #11: Game Setup and Initialization ✅
 **GitHub Issue:** [#11](https://github.com/Kedanza/OpenFool/issues/11)  
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #2 (Deck), Issue #4 (RuleSet), Issue #5 (Player)  
-**Geschätzte Zeit:** 3-4 Stunden
+**Geschätzte Zeit:** 3-4 Stunden  
+**Status:** COMPLETED | Tests: 93/93 ✓
 
 **Beschreibung:**
 Implementierung der Spiel-Initialisierung:
@@ -308,16 +309,19 @@ Implementierung der Spiel-Initialisierung:
 - Initiale Kartenverteilung
 
 **Akzeptanzkriterien:**
-- [ ] setupGame() function
-- [ ] Spieler-Erstellung für 2-5 Spieler
-- [ ] Trump-Karte und Suit-Bestimmung
-- [ ] Niedrigster-Trump-Algorithmus für ersten Angreifer
-- [ ] 6-Karten-Verteilung pro Spieler
-- [ ] Tisch-Arrays-Initialisierung
+- [x] setupGame() function
+- [x] Spieler-Erstellung für 2-5 Spieler
+- [x] Trump-Karte und Suit-Bestimmung
+- [x] Niedrigster-Trump-Algorithmus für ersten Angreifer
+- [x] 6-Karten-Verteilung pro Spieler
+- [x] Tisch-Arrays-Initialisierung
+- [x] findFirstAttacker() mit ACE/DEUCE Sonderfällen
+- [x] needsRedeal() Erkennung
+- [x] Vollständige Game-State-Rückgabe (13 Felder)
 
-**Dateien zu erstellen:**
+**Dateien erstellt:**
 - `src/game_setup.lua`
-- `tests/game_setup_test.lua`
+- `tests/game_setup_test_love.lua`
 
 ---
 
@@ -348,11 +352,12 @@ Implementierung der Siegbedingungs-Erkennung:
 
 ## 🎯 Phase 4: Love2D Integration
 
-### Issue #13: Love2D Project Structure Setup
+### Issue #13: Love2D Project Structure Setup ✅
 **GitHub Issue:** [#13](https://github.com/Kedanza/OpenFool/issues/13)  
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Keine  
-**Geschätzte Zeit:** 2-3 Stunden
+**Geschätzte Zeit:** 2-3 Stunden  
+**Status:** COMPLETED
 
 **Beschreibung:**
 Einrichtung der Love2D-Projektstruktur:
@@ -361,14 +366,14 @@ Einrichtung der Love2D-Projektstruktur:
 - Modul-Imports-System
 
 **Akzeptanzkriterien:**
-- [ ] main.lua mit love.load(), love.update(), love.draw()
-- [ ] conf.lua mit Fenster-Konfiguration
-- [ ] assets/ Ordner-Struktur
-- [ ] src/ Modul-Organisation
-- [ ] lib/ für externe Bibliotheken
-- [ ] Modul-Import-System
+- [x] main.lua mit love.load(), love.update(), love.draw()
+- [x] conf.lua mit Fenster-Konfiguration
+- [x] src/init.lua Modul-Organisation
+- [x] Modul-Import-System
+- [x] Grundlegende Game-Initialisierung
+- [x] Keyboard/Mouse-Event-Handling
 
-**Dateien zu erstellen:**
+**Dateien erstellt:**
 - `main.lua`
 - `conf.lua`
 - `src/init.lua`

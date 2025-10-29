@@ -2,7 +2,7 @@
 -- Game Rules Configuration System
 -- Translates RuleSet.kt
 
-local card = require("card")
+local card = require("src.card")
 
 ---Create a new RuleSet with configurable game rules
 ---@param options table Optional configuration table with rule settings

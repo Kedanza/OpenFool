@@ -2,7 +2,7 @@
 -- AI Attack Logic - Choosing the best card to throw when starting a turn
 -- Translates Player.kt startTurn()
 
-local aiEval = require("ai_evaluation")
+local aiEval = require("src.ai_evaluation")
 
 -- Constants for attack bonuses
 -- These bonuses apply when throwing cards of the same rank

@@ -2,7 +2,7 @@
 -- AI Throw Additional Cards Logic - Deciding whether to throw more cards or finish turn
 -- Translates Player.kt throwOrDone()
 
-local aiEval = require("ai_evaluation")
+local aiEval = require("src.ai_evaluation")
 
 -- Constants for throw vs done decision-making
 local PENALTY_BASE = 1200  -- Base penalty threshold for throwing additional cards
@@ -21,7 +21,7 @@ local PENALTY_DELTA = 50   -- Penalty reduction per card remaining in deck
 ---@return table|nil The card to throw, or nil to signal "done"
 local function aiThrowOrDone(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank)
     -- Import card module
-    local card = require("card")
+    local card = require("src.card")
     
     -- Build set of ranks already present in attack/defense
     local ranksPresent = {}

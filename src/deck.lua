@@ -2,7 +2,7 @@
 -- Translated from Deck.kt
 -- Licensed under MIT License
 
-local card = require("card")
+local card = require("src.card")
 local Suit = card.Suit
 local Rank = card.Rank
 local createCard = card.createCard

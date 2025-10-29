@@ -2,7 +2,7 @@
 -- Player System Implementation
 -- Manages player state, hand, and card operations
 
-local card = require("card")
+local card = require("src.card")
 
 -- Sorting modes
 local SortingMode = {

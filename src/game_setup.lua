@@ -2,9 +2,9 @@
 -- Game initialization and setup functionality
 -- Migrated from GameScreen.kt init block
 
-local Player = require("player")
-local Deck = require("deck")
-local Card = require("card")
+local Player = require("src.player")
+local Deck = require("src.deck")
+local Card = require("src.card")
 
 local GameSetup = {}
 
@@ -25,7 +25,7 @@ function GameSetup.setupGame(ruleSet)
     end
     
     -- Create deck
-    local deck = require("deck").createDeck(ruleSet.lowestRank)
+    local deck = Deck.createDeck(ruleSet.lowestRank)
     deck:shuffle()
     
     -- Create players
@@ -102,7 +102,7 @@ function GameSetup.findFirstAttacker(players, trumpSuit, deuceBeatsAce)
     local lowestTrumpValue = math.huge
     local firstAttacker = 1
     
-    local Rank = require("card").Rank
+    local Rank = Card.Rank
     
     for i, player in ipairs(players) do
         for _, card in ipairs(player.hand) do

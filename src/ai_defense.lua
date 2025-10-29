@@ -1,8 +1,8 @@
 -- ai_defense.lua
--- AI Defense Logic - Deciding whether to beat an attack or take cards
+-- AI Defense Logic - Deciding whether to beat or take cards
 -- Translates Player.kt tryBeat()
 
-local aiEval = require("ai_evaluation")
+local aiEval = require("src.ai_evaluation")
 
 -- Constants for defense decision-making
 local RANK_PRESENT_BONUS = 300  -- Bonus for beating with a card of already present rank
@@ -28,7 +28,7 @@ local PASS_PENALTY = -400  -- Penalty adjustment for passing
 ---@return table|nil The card to beat with, or nil to take all cards
 local function aiTryBeat(hand, attackCards, defenseCards, trumpSuit, cardsRemaining, playerHands, lowestRank, deuceBeatsAce)
     -- Import card module for beats() function
-    local card = require("card")
+    local card = require("src.card")
     
     -- Find which attack we need to beat (first unbeaten attack)
     local attackIndex = nil
