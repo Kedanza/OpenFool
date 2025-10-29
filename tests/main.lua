@@ -54,6 +54,9 @@ function love.load()
     -- Run GameState tests
     require("gamestate_test_love")
     
+    -- Run Turn Management tests
+    require("turn_test_love")
+    
     -- Print results
     print("\n" .. string.rep("=", 50))
     print(string.format("Passed: %d, Failed: %d, Total: %d", 
