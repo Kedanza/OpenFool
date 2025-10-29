@@ -357,7 +357,7 @@ Implementierung der Siegbedingungs-Erkennung:
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Keine  
 **Geschätzte Zeit:** 2-3 Stunden  
-**Status:** COMPLETED
+**Status:** COMPLETED - NEEDS TESTING ⚠️
 
 **Beschreibung:**
 Einrichtung der Love2D-Projektstruktur:
@@ -378,6 +378,8 @@ Einrichtung der Love2D-Projektstruktur:
 - `conf.lua`
 - `src/init.lua`
 
+**⚠️ Hinweis:** Implementation abgeschlossen, aber Tests fehlen. Siehe Issue #22 für Test-Requirements.
+
 ---
 
 ### Issue #14: Asset Loading System ✅
@@ -385,7 +387,7 @@ Einrichtung der Love2D-Projektstruktur:
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #13 (Project Structure)  
 **Geschätzte Zeit:** 3-4 Stunden  
-**Status:** COMPLETED
+**Status:** COMPLETED - NEEDS TESTING ⚠️
 
 **Beschreibung:**
 Implementierung des Asset-Loading-Systems:
@@ -406,6 +408,8 @@ Implementierung des Asset-Loading-Systems:
 **Dateien erstellt:**
 - `src/assets.lua` (217 lines)
 
+**⚠️ Hinweis:** Implementation abgeschlossen, aber Tests fehlen. Siehe Issue #23 für Test-Requirements.
+
 ---
 
 ### Issue #15: Basic Rendering System ✅
@@ -413,7 +417,7 @@ Implementierung des Asset-Loading-Systems:
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #14 (Asset Loading)  
 **Geschätzte Zeit:** 4-5 Stunden  
-**Status:** COMPLETED
+**Status:** COMPLETED - NEEDS TESTING ⚠️
 
 **Beschreibung:**
 Implementierung des grundlegenden Rendering-Systems:
@@ -434,6 +438,8 @@ Implementierung des grundlegenden Rendering-Systems:
 
 **Dateien erstellt:**
 - `src/rendering.lua` (279 lines)
+
+**⚠️ Hinweis:** Implementation abgeschlossen, aber Tests fehlen. Siehe Issue #24 für Test-Requirements.
 
 ---
 
@@ -599,6 +605,90 @@ Vollständige Code-Dokumentation und Projekt-Finalisierung:
 - `docs/API.md`
 - `docs/DEVELOPER_GUIDE.md`
 - `CHANGELOG.md`
+
+---
+
+### Issue #22: Love2D Project Structure Tests
+**GitHub Issue:** [#22](https://github.com/Kedanza/OpenFool/issues/22)
+**Priority:** HIGH ⭐⭐⭐⭐
+**Type:** Testing
+**Abhängigkeiten:** Issue #13 (Love2D Project Structure)
+**Geschätzte Zeit:** 2-3 Stunden
+
+**Beschreibung:**
+Create comprehensive tests for the Love2D project structure components to ensure proper initialization, module loading, and basic functionality.
+
+**Akzeptanzkriterien:**
+- [ ] `main.lua` loads without errors
+- [ ] `love.load()` initializes game state correctly
+- [ ] `love.update(dt)` runs without errors
+- [ ] `love.draw()` renders basic elements
+- [ ] `conf.lua` configures window properly (title, size, vsync)
+- [ ] `src/init.lua` loads all required modules
+- [ ] Module dependencies resolve correctly
+- [ ] Keyboard input handling works
+- [ ] Mouse input handling works
+
+**Dateien zu erstellen:**
+- `tests/love2d_structure_test.lua`
+- `tests/conf_test.lua`
+- `tests/module_loading_test.lua`
+
+---
+
+### Issue #23: Asset Loading System Tests
+**GitHub Issue:** [#23](https://github.com/Kedanza/OpenFool/issues/23)
+**Priority:** HIGH ⭐⭐⭐⭐
+**Type:** Testing
+**Abhängigkeiten:** Issue #14 (Asset Loading System)
+**Geschätzte Zeit:** 3-4 Stunden
+
+**Beschreibung:**
+Create comprehensive tests for the asset loading system to ensure all game assets load correctly, error handling works, and the asset cache functions properly.
+
+**Akzeptanzkriterien:**
+- [ ] All 52 card images load successfully (russian deck)
+- [ ] Card back image loads correctly
+- [ ] All 4 suit symbols load (hearts, diamonds, clubs, spades)
+- [ ] All 4 font sizes load (12pt, 16pt, 24pt, 32pt)
+- [ ] Background image loads successfully
+- [ ] Cards are indexed properly by "rank-suit" format
+- [ ] Asset cache prevents duplicate loading
+- [ ] Missing asset files are handled gracefully
+
+**Dateien zu erstellen:**
+- `tests/asset_loading_test.lua`
+- `tests/asset_cache_test.lua`
+- `tests/asset_error_handling_test.lua`
+
+---
+
+### Issue #24: Rendering System Tests
+**GitHub Issue:** [#24](https://github.com/Kedanza/OpenFool/issues/24)
+**Priority:** HIGH ⭐⭐⭐⭐
+**Type:** Testing
+**Abhängigkeiten:** Issue #15 (Basic Rendering System)
+**Geschätzte Zeit:** 4-5 Stunden
+
+**Beschreibung:**
+Create comprehensive tests for the rendering system to ensure all drawing functions work correctly, visual elements render properly, and performance is acceptable.
+
+**Akzeptanzkriterien:**
+- [ ] `drawCard()` renders cards at correct positions
+- [ ] Face-up/face-down rendering works correctly
+- [ ] Card rotation and scaling applied properly
+- [ ] `drawPlayerHand()` creates proper fan layout
+- [ ] `drawTable()` shows attack/defense pairs correctly
+- [ ] `drawTrump()` shows trump suit rotated 90°
+- [ ] `isPointInCard()` detects mouse clicks on cards
+- [ ] Rendering maintains 60 FPS
+- [ ] No visual artifacts or glitches
+
+**Dateien zu erstellen:**
+- `tests/rendering_test.lua`
+- `tests/card_drawing_test.lua`
+- `tests/layout_test.lua`
+- `tests/performance_rendering_test.lua`
 
 ---
 

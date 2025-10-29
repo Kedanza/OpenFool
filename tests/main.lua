@@ -7,22 +7,24 @@ failedTests = 0
 totalTests = 0
 
 -- Global assert function that counts tests
+failedMessages = {}
 function assert(condition, message)
     totalTests = totalTests + 1
     if condition then
         passedTests = passedTests + 1
-        print("✓ " .. message)
+        print("PASS: " .. message)
     else
         failedTests = failedTests + 1
-        print("✗ " .. message)
+        print("FAIL: " .. message)
+        table.insert(failedMessages, message)
     end
 end
 
 function love.load()
     print("\n=== Love2D Test Runner ===\n")
     
-    -- Add parent directory to package path to find src/
-    package.path = package.path .. ";../src/?.lua;./src/?.lua"
+    -- Add parent directory to package path to find src/ and root files
+    package.path = package.path .. ";../src/?.lua;./src/?.lua;../?.lua;./?.lua"
     
     -- Run card tests
     require("card_test_love")
@@ -60,17 +62,31 @@ function love.load()
     -- Run Game Setup tests
     require("game_setup_test_love")
     
+    -- Run Love2D Project Structure tests
+    require("love2d_structure_test_love")
+    
+    -- Run Asset Loading tests
+    require("assets_test_love")
+    
+    -- Run Rendering tests
+    require("rendering_test_love")
+    
     -- Print results
     print("\n" .. string.rep("=", 50))
     print(string.format("Passed: %d, Failed: %d, Total: %d", 
         passedTests, failedTests, totalTests))
-    
+
+    if failedTests > 0 then
+        print("\nFAILED TESTS SUMMARY:")
+        for i, msg in ipairs(failedMessages) do
+            print(string.format("  %d. %s", i, msg))
+        end
+    end
+
     if failedTests == 0 then
-        print("✓ All tests passed!")
-        love.event.quit(0)
+        print("SUCCESS: All tests passed!")
     else
-        print("✗ Some tests failed")
-        love.event.quit(1)
+        print("FAILED: Some tests failed")
     end
     print(string.rep("=", 50))
 end

@@ -297,23 +297,24 @@ function GameLoop.create(game, stateManager, modules)
             self.game.ruleSet:getLowestRank()
         )
         
-        if result.shouldTake then
-            -- Defender takes all cards
+        if result == nil then
+            -- AI chooses to take all cards
             print("AI Player " .. defenderIndex .. " is taking cards")
             
             -- Transition to DRAWING (defender failed)
             self.waitingForDefender = false
             self.stateManager:setState(self.modules.GameState.DRAWING)
-        elseif result.cardToBeat then
-            print("AI Player " .. defenderIndex .. " defending with: " .. result.cardToBeat:toString())
+        else
+            -- AI beats with the returned card
+            print("AI Player " .. defenderIndex .. " defending with: " .. result:toString())
             
             -- Remove card from hand
-            player:removeCard(result.cardToBeat)
+            player:removeCard(result)
             
             -- Add to defense cards
             for i = 1, 6 do
                 if self.game.attackCards[i] and not self.game.defenseCards[i] then
-                    self.game.defenseCards[i] = result.cardToBeat
+                    self.game.defenseCards[i] = result
                     break
                 end
             end

@@ -1,4 +1,83 @@
-# OpenFool Tests
+# OpenFool
+![Travis](https://img.shields.io/travis/trolley813/OpenFool)
+![Github All Releases](https://img.shields.io/github/downloads/trolley813/OpenFool/total.svg)
+![Github Releases](https://img.shields.io/github/downloads/trolley813/OpenFool/latest/total.svg)
+![GitHub release](https://img.shields.io/github/release/trolley813/OpenFool.svg)
+[![Gitter](https://img.shields.io/gitter/room/OpenFoolCommunity/Lobby.svg)](https://gitter.im/OpenFoolCommunity/Lobby)
+
+OpenFool - free and open source (MIT licensed) Fool (Durak) card game implementation for desktop and Android.
+
+[<img src="https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/ru.hyst329.openfool/)
+
+## Current Status: Love2D Migration
+
+**Branch:** `love2d-implementation`  
+**Status:** MVP Complete ✅ | Testing In Progress ⚠️
+
+This branch contains the ongoing migration from Kotlin/libGDX to Lua/Love2D. The core game logic has been successfully migrated and integrated with Love2D for desktop deployment.
+
+### Migration Progress
+
+- ✅ **Core Game Logic:** All card game mechanics, AI, and game state management
+- ✅ **Love2D Integration:** Project structure, asset loading, rendering system
+- ✅ **Game Loop:** Complete integration with playable game
+- ⚠️ **Testing:** Love2D components need comprehensive tests (Issues #22-24)
+- 📝 **Documentation:** Being updated for Love2D deployment
+
+## Features
+
+### Implemented
+
+- 4-players partnership game (2 vs 2), individual game for 2-5 players
+- 52-card decks: Standard Russian (designed by A. Charlemagne in 19th century, public domain - from Wikimedia),
+    international (by Chris Aguilar - LGPL v3), French deck (by David Bellot - LGPL v3), stripped deck variants (24, 32 and 36 cards)
+- Standard rules for throwing in and passing (the latter is optional)
+- Some conventions may be customised
+- **Love2D Features:** Keyboard controls, visual card rendering, AI opponents
+
+### Planned
+
+- Individual and partnership play for 6 players (3 vs 3)
+- Customisable player names (both AI and human)
+- Statistics
+- Online play (via custom server)
+- More deck designs
+- More customisable rules (e.g. Japanese fool or spade-on-spade)
+- Menu system and settings UI
+
+## How to Run (Love2D Version)
+
+### Prerequisites
+
+- [Love2D](https://love2d.org/) installed on your system
+- Windows, macOS, or Linux
+
+### Running the Game
+
+```bash
+# From the project root directory
+love .
+```
+
+### Controls
+
+- **A/D or Left/Right Arrow:** Navigate cards in hand
+- **W/Enter or Up Arrow:** Select/play highlighted card
+- **T:** Take cards (when defending)
+- **S:** Done/End turn (when attacking)
+- **Number keys (1-6):** Quick play card by position
+
+## How to Build (Legacy Android Version)
+
+It's a Gradle project. Run
+
+```bash
+./gradlew :desktop:run
+```
+
+to run the desktop version
 
 ## Running Tests
 
@@ -39,12 +118,14 @@ For detailed information on writing and organizing tests, see **[TEST_GUIDELINES
 **Total: ✓ 512/512 passed**
 
 ### Performance Metrics
+
 - **Throughput:** 173,896 evaluations/second
 - **Average Time:** 0.0058 ms per evaluation
 - **Memory Usage:** Excellent (no leaks detected)
 - **Stress Test:** 10,000 evaluations in 0.058 seconds
 
 ### Card Tests
+
 - Suit enum tests: 4/4 ✓
 - Rank enum tests: 13/13 ✓
 - createCard tests: 3/3 ✓
@@ -57,6 +138,7 @@ For detailed information on writing and organizing tests, see **[TEST_GUIDELINES
 - findCardInHand tests: 4/4 ✓
 
 ### Deck Tests
+
 - Deck creation tests: 6/6 ✓
 - Draw tests: 4/4 ✓
 - Draw all cards tests: 3/3 ✓
