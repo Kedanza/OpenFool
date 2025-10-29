@@ -232,12 +232,12 @@ Implementierung der KI-Verteidigungs-Logik:
 
 ---
 
-### Issue #9: AI Decision Making - Throw Additional Cards ✅
+### Issue #9: AI Decision Making - Throw Additional Cards ✅ 🔍
 **GitHub Issue:** [#24](https://github.com/Kedanza/OpenFool/issues/24)  
 **Priority:** MEDIUM ⭐⭐⭐  
 **Abhängigkeiten:** Issue #6 (AI Evaluation)  
 **Geschätzte Zeit:** 3-4 Stunden  
-**Status:** COMPLETED | Tests: 13/13 ✓
+**Status:** COMPLETED - NEEDS REVIEW ⚠️ | Tests: 13/13 ✓
 
 **Beschreibung:**
 Implementierung der KI-Logik für Nachwerfen:
@@ -245,11 +245,15 @@ Implementierung der KI-Logik für Nachwerfen:
 - Nur Karten mit vorhandenen Rängen
 - Optimale Auswahl basierend auf Hand-Bewertung
 
+**⚠️ Hinweis:** Dieses Feature wurde nachträglich hinzugefügt und war nicht im ursprünglichen Plan. Benötigt Code-Review und Integration-Testing mit dem Rest des Spiels.
+
 **Akzeptanzkriterien:**
 - [x] aiThrowOrDone() function
 - [x] Rang-Matching-Validation
 - [x] Wurf-vs-Fertig Entscheidung
 - [x] Mehrfach-Rang-Prioritäten
+- [ ] Code-Review durchgeführt
+- [ ] Integration mit Game Loop getestet
 
 **Dateien erstellt:**
 - `src/ai_throw_additional.lua`
