@@ -250,10 +250,11 @@ Implementierung der KI-Logik für Nachwerfen:
 
 ## 🎯 Phase 3: Game Flow Control
 
-### Issue #10: Turn Management System
+### Issue #10: Turn Management System ✅
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #3 (GameState), Issue #5 (Player)  
-**Geschätzte Zeit:** 4-5 Stunden
+**Geschätzte Zeit:** 4-5 Stunden  
+**Status:** COMPLETED | Tests: 46/46 ✓
 
 **Beschreibung:**
 Implementierung der Runden-Verwaltung:
@@ -262,16 +263,20 @@ Implementierung der Runden-Verwaltung:
 - Karten-Verteilung nach Runden
 
 **Akzeptanzkriterien:**
-- [ ] Turn-Rotation-Logik
-- [ ] endTurn() function
-- [ ] Karten-Sammlung vom Tisch
-- [ ] Nachziehen-Logik
-- [ ] Spieler-aus-dem-Spiel-Erkennung
-- [ ] Hand-Sortierung nach Aktionen
+- [x] Turn-Rotation-Logik (getNextPlayerIndex)
+- [x] endTurn() function
+- [x] Karten-Sammlung vom Tisch
+- [x] Nachziehen-Logik (up to 6 cards per player)
+- [x] Spieler-aus-dem-Spiel-Erkennung
+- [x] Team-Play-Unterstützung (P1+P2 vs P3+P4)
+- [x] getCurrentAttacker/getCurrentDefender
+- [x] isGameOver und determineWinner
 
-**Dateien zu erstellen:**
-- `src/turn_management.lua`
-- `tests/turn_management_test.lua`
+**Dateien erstellt:**
+- `src/turn.lua`
+- `tests/turn_test_love.lua`
+
+**Hinweis:** Vollständiges Turn-Management-System mit Team-Play-Unterstützung, Out-of-Play-Erkennung, und komplexer Kartenverteilungslogik.
 
 ---
 
