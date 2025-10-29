@@ -9,6 +9,7 @@ Systematische Migration der OpenFool Kotlin/libGDX Implementierung zu Lua/Love2D
 ## 🎯 Phase 1: Foundation (Kritischer Pfad)
 
 ### Issue #1: Core Data Structures Migration ✅
+**GitHub Issue:** [#2](https://github.com/Kedanza/OpenFool/issues/2)  
 **Priority:** CRITICAL ⭐⭐⭐⭐⭐  
 **Abhängigkeiten:** Keine  
 **Geschätzte Zeit:** 4-6 Stunden  
@@ -37,6 +38,7 @@ Migration der grundlegenden Datenstrukturen von Kotlin zu Lua:
 ---
 
 ### Issue #2: Deck Management System ✅
+**GitHub Issue:** [#3](https://github.com/Kedanza/OpenFool/issues/3)  
 **Priority:** CRITICAL ⭐⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #1 (Card System)  
 **Geschätzte Zeit:** 3-4 Stunden  
@@ -63,6 +65,7 @@ Implementierung des Deck-Management-Systems:
 ---
 
 ### Issue #3: Game State Management ✅
+**GitHub Issue:** [#9](https://github.com/Kedanza/OpenFool/issues/9)  
 **Priority:** CRITICAL ⭐⭐⭐⭐⭐  
 **Abhängigkeiten:** Keine  
 **Geschätzte Zeit:** 2-3 Stunden  
@@ -90,6 +93,7 @@ Implementierung des Spielzustands-Management-Systems:
 ---
 
 ### Issue #4: RuleSet Configuration System ✅
+**GitHub Issue:** [#8](https://github.com/Kedanza/OpenFool/issues/8)  
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Keine  
 **Geschätzte Zeit:** 3-4 Stunden  
@@ -146,6 +150,7 @@ Implementierung des Spieler-Systems:
 ---
 
 ### Issue #6: AI Evaluation System - Hand Value Calculation ✅
+**GitHub Issue:** [#4](https://github.com/Kedanza/OpenFool/issues/4)  
 **Priority:** CRITICAL ⭐⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #1 (Card), Issue #4 (RuleSet), Issue #5 (Player)  
 **Geschätzte Zeit:** 6-8 Stunden  
@@ -175,6 +180,7 @@ Implementierung des komplexen KI-Bewertungssystems:
 ---
 
 ### Issue #7: AI Decision Making - Attack Logic ✅
+**GitHub Issue:** [#5](https://github.com/Kedanza/OpenFool/issues/5)  
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #6 (AI Evaluation)  
 **Geschätzte Zeit:** 4-5 Stunden  
@@ -200,6 +206,7 @@ Implementierung der KI-Angriffs-Logik:
 ---
 
 ### Issue #8: AI Decision Making - Defense Logic ✅
+**GitHub Issue:** [#6](https://github.com/Kedanza/OpenFool/issues/6)  
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #6 (AI Evaluation)  
 **Geschätzte Zeit:** 5-6 Stunden  
@@ -225,6 +232,7 @@ Implementierung der KI-Verteidigungs-Logik:
 ---
 
 ### Issue #9: AI Decision Making - Throw Additional Cards ✅
+**GitHub Issue:** [#24](https://github.com/Kedanza/OpenFool/issues/24)  
 **Priority:** MEDIUM ⭐⭐⭐  
 **Abhängigkeiten:** Issue #6 (AI Evaluation)  
 **Geschätzte Zeit:** 3-4 Stunden  
@@ -251,6 +259,7 @@ Implementierung der KI-Logik für Nachwerfen:
 ## 🎯 Phase 3: Game Flow Control
 
 ### Issue #10: Turn Management System ✅
+**GitHub Issue:** [#10](https://github.com/Kedanza/OpenFool/issues/10)  
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #3 (GameState), Issue #5 (Player)  
 **Geschätzte Zeit:** 4-5 Stunden  
@@ -281,6 +290,7 @@ Implementierung der Runden-Verwaltung:
 ---
 
 ### Issue #11: Game Setup and Initialization
+**GitHub Issue:** [#11](https://github.com/Kedanza/OpenFool/issues/11)  
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #2 (Deck), Issue #4 (RuleSet), Issue #5 (Player)  
 **Geschätzte Zeit:** 3-4 Stunden
@@ -307,6 +317,7 @@ Implementierung der Spiel-Initialisierung:
 ---
 
 ### Issue #12: Win Condition Detection
+**GitHub Issue:** [#12](https://github.com/Kedanza/OpenFool/issues/12)  
 **Priority:** MEDIUM ⭐⭐⭐  
 **Abhängigkeiten:** Issue #5 (Player), Issue #4 (RuleSet)  
 **Geschätzte Zeit:** 2-3 Stunden
@@ -333,6 +344,7 @@ Implementierung der Siegbedingungs-Erkennung:
 ## 🎯 Phase 4: Love2D Integration
 
 ### Issue #13: Love2D Project Structure Setup
+**GitHub Issue:** [#13](https://github.com/Kedanza/OpenFool/issues/13)  
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Keine  
 **Geschätzte Zeit:** 2-3 Stunden
@@ -359,6 +371,7 @@ Einrichtung der Love2D-Projektstruktur:
 ---
 
 ### Issue #14: Asset Loading System
+**GitHub Issue:** [#14](https://github.com/Kedanza/OpenFool/issues/14)  
 **Priority:** HIGH ⭐⭐⭐⭐  
 **Abhängigkeiten:** Issue #13 (Project Structure)  
 **Geschätzte Zeit:** 3-4 Stunden
@@ -412,6 +425,7 @@ Implementierung des grundlegenden Rendering-Systems:
 ---
 
 ### Issue #16: Input Handling System
+**GitHub Issue:** [#16](https://github.com/Kedanza/OpenFool/issues/16)  
 **Priority:** MEDIUM ⭐⭐⭐  
 **Abhängigkeiten:** Issue #15 (Rendering)  
 **Geschätzte Zeit:** 3-4 Stunden
@@ -438,6 +452,7 @@ Implementierung des Input-Handling-Systems:
 ---
 
 ### Issue #17: Animation System
+**GitHub Issue:** [#17](https://github.com/Kedanza/OpenFool/issues/17)  
 **Priority:** LOW ⭐⭐  
 **Abhängigkeiten:** Issue #15 (Rendering)  
 **Geschätzte Zeit:** 4-6 Stunden
@@ -465,6 +480,7 @@ Implementierung eines einfachen Animations-Systems:
 ## 🎯 Phase 5: Game Integration
 
 ### Issue #18: Core Game Loop Integration
+**GitHub Issue:** [#18](https://github.com/Kedanza/OpenFool/issues/18)  
 **Priority:** CRITICAL ⭐⭐⭐⭐⭐  
 **Abhängigkeiten:** Alle vorherigen Issues  
 **Geschätzte Zeit:** 6-8 Stunden
