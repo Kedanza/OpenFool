@@ -15,6 +15,7 @@ local AIEvaluation = require("src.ai_evaluation")
 local AIAttack = require("src.ai_attack")
 local AIDefense = require("src.ai_defense")
 local AIThrow = require("src.ai_throw_additional")
+local Assets = require("src.assets")
 
 -- Create new game instance
 function Game.new()
@@ -28,6 +29,7 @@ function Game.new()
     self.GameState = GameState
     self.GameSetup = GameSetup
     self.Turn = Turn
+    self.Assets = Assets
     self.AI = {
         evaluation = AIEvaluation,
         attack = AIAttack,

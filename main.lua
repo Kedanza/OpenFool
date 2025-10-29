@@ -17,6 +17,15 @@ function love.load()
     -- Initialize random seed
     math.randomseed(os.time())
     
+    -- Load assets
+    print("Loading assets...")
+    local Assets = require("src.assets")
+    Assets.load()
+    
+    if not Assets.isReady() then
+        print("WARNING: Some assets failed to load!")
+    end
+    
     -- Create new game instance
     game = Game.new()
     
