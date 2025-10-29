@@ -25,7 +25,7 @@ For detailed information on writing and organizing tests, see **[TEST_GUIDELINES
 
 **Test Framework:** Refactored to use global `assert()` (GitHub Issue #23)
 
-**Card Module Tests: ✓ 36/36 passed**
+**Card Module Tests: ✓ 38/38 passed**
 **Deck Module Tests: ✓ 28/28 passed**
 **AI Evaluation Module Tests: ✓ 37/37 passed**
 **AI Attack Module Tests: ✓ 44/44 passed**
@@ -35,7 +35,8 @@ For detailed information on writing and organizing tests, see **[TEST_GUIDELINES
 **Player Module Tests: ✓ 55/55 passed**
 **GameState Module Tests: ✓ 92/92 passed**
 **Turn Management Module Tests: ✓ 46/46 passed**
-**Total: ✓ 417/417 passed**
+**Game Setup Module Tests: ✓ 93/93 passed**
+**Total: ✓ 512/512 passed**
 
 ### Performance Metrics
 - **Throughput:** 173,896 evaluations/second

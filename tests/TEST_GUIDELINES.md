@@ -80,27 +80,41 @@ return true
 
 ## ✅ Assertion Pattern
 
-### Use Global Assert Functions
+### Use Global Assert Function
 
-**IMPORTANT:** Always use the **global** `assert()` function from `main.lua`, NOT local functions.
+**IMPORTANT:** Always use the **global** `assert()` function from `main.lua`. The test framework has been simplified to use only the standard Lua `assert()` function.
 
-**❌ WRONG (Local function - won't be counted):**
-```lua
-local function assert(condition, message)
-    -- This won't update global counters!
-end
-```
-
-**✓ CORRECT (Global function):**
+**✓ CORRECT (Standard Lua assert):**
 ```lua
 -- Use the global assert from main.lua
 assert(card.rank == Rank.ACE, "Card should be an Ace")
 assert(deck:remaining() == 36, "Deck should have 36 cards")
+assert(not invalidCondition, "This condition should be false")
+assert(value ~= nil, "Value should not be nil")
+```
+
+### Common Assertion Patterns
+
+**Equality:**
+```lua
+assert(actual == expected, "Description")
+```
+
+**Boolean conditions:**
+```lua
+assert(condition, "Should be true")
+assert(not condition, "Should be false")
+```
+
+**Nil checks:**
+```lua
+assert(value ~= nil, "Should exist")
+assert(value == nil, "Should not exist")
 ```
 
 ### Why This Matters
 
-The test runner in `main.lua` defines these globals:
+The test runner in `main.lua` defines a global `assert()` function that counts tests:
 ```lua
 passedTests = 0
 failedTests = 0
@@ -118,7 +132,7 @@ function assert(condition, message)
 end
 ```
 
-Using local assert functions breaks the test counting!
+**Note:** Previous wrapper functions (`assert_equal`, `assert_true`, `assert_false`, `assert_not_nil`) have been removed as of GitHub Issue #23. All tests now use the standard `assert(condition, message)` pattern.
 
 ---
 
@@ -448,4 +462,5 @@ return true
 
 ---
 
-**Last Updated:** Issue #5 completion (276 total tests)
+**Last Updated:** GitHub Issue #23 (Test framework refactoring - 368 total tests)
+
