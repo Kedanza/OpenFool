@@ -32,7 +32,7 @@ local function createTestGame()
 
     local modules = {
         Card = card,
-        GameState = GameState,
+        GameState = GameState.GameState,  -- Pass the enum, not the whole module
         Turn = Turn,
         AI = AI
     }
@@ -76,7 +76,7 @@ do
     -- Initialize should reset everything
     loop:initialize()
 
-    assert(stateManager:getState() == GameState.READY, "State should be reset to READY")
+    assert(stateManager:getState() == GameState.GameState.READY, "State should be reset to READY")
     assert(loop.selectedCardIndex == nil, "selectedCardIndex should be reset to nil")
     assert(loop.waitingForDefender == false, "waitingForDefender should be reset to false")
     assert(loop.gameOver == false, "gameOver should be reset to false")
@@ -93,12 +93,12 @@ do
     loop:initialize()
 
     local initialState = stateManager:getState()
-    assert(initialState == GameState.READY, "Should start in READY state")
+    assert(initialState == GameState.GameState.READY, "Should start in READY state")
 
     loop:handleReadyState()
 
     local newState = stateManager:getState()
-    assert(newState == GameState.THROWING, "Should transition to THROWING state")
+    assert(newState == GameState.GameState.THROWING, "Should transition to THROWING state")
 end
 
 -- Test 4: State Machine Transitions - THROWN → BEATING
@@ -107,10 +107,10 @@ do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
 
-    stateManager:setState(GameState.THROWN)
+    stateManager:setState(GameState.GameState.THROWN)
     loop:handleThrownState()
 
-    assert(stateManager:getState() == GameState.BEATING, "Should transition to BEATING state")
+    assert(stateManager:getState() == GameState.GameState.BEATING, "Should transition to BEATING state")
 end
 
 -- Test 5: State Machine Transitions - BEATEN → DRAWING (no more cards)
@@ -119,7 +119,7 @@ do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
 
-    stateManager:setState(GameState.BEATEN)
+    stateManager:setState(GameState.GameState.BEATEN)
 
     -- Mark all players as done (no one can throw more)
     game.playerDoneStatuses[1] = true
@@ -127,7 +127,7 @@ do
 
     loop:handleBeatenState()
 
-    assert(stateManager:getState() == GameState.DRAWING, "Should transition to DRAWING when no one can throw more")
+    assert(stateManager:getState() == GameState.GameState.DRAWING, "Should transition to DRAWING when no one can throw more")
 end
 
 -- Test 6: State Machine Transitions - DRAWING → READY (end turn)
@@ -136,7 +136,7 @@ do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
 
-    stateManager:setState(GameState.DRAWING)
+    stateManager:setState(GameState.GameState.DRAWING)
 
     -- Set up a successful defense scenario
     game.attackCards[1] = card.createCard(card.Suit.SPADES, card.Rank.SIX)
@@ -144,7 +144,7 @@ do
 
     loop:handleDrawingState()
 
-    assert(stateManager:getState() == GameState.READY, "Should transition back to READY after drawing")
+    assert(stateManager:getState() == GameState.GameState.READY, "Should transition back to READY after drawing")
     assert(loop.waitingForDefender == false, "waitingForDefender should be reset")
 end
 
@@ -197,6 +197,11 @@ do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
 
+    -- Clear initial hands from setup
+    for i = 1, #game.players do
+        game.players[i]:clearHand()
+    end
+
     -- Give defender 3 cards
     local defender = game.players[game.currentDefender]
     for i = 1, 3 do
@@ -208,9 +213,10 @@ do
     game.attackCards[2] = card.createCard(card.Suit.CLUBS, card.Rank.SEVEN)
     game.attackCards[3] = card.createCard(card.Suit.DIAMONDS, card.Rank.EIGHT)
 
-    -- Give attacker cards
+    -- Give attacker cards and ensure not marked as done
     local attacker = game.players[game.currentAttacker]
     attacker:addCard(card.createCard(card.Suit.SPADES, card.Rank.NINE))
+    game.playerDoneStatuses[game.currentAttacker] = false
 
     local canThrow = loop:canAnyoneThrowMore()
     assert(canThrow == false, "Should not be able to throw more (at defender hand size limit)")
@@ -409,7 +415,7 @@ do
 
     local modules = {
         Card = card,
-        GameState = GameState,
+        GameState = GameState.GameState,
         Turn = Turn,
         AI = AI
     }
@@ -441,7 +447,7 @@ do
 
     local modules = {
         Card = card,
-        GameState = GameState,
+        GameState = GameState.GameState,
         Turn = Turn,
         AI = AI
     }
@@ -487,7 +493,7 @@ do
 
     local modules = {
         Card = card,
-        GameState = GameState,
+        GameState = GameState.GameState,
         Turn = Turn,
         AI = AI
     }
@@ -531,7 +537,7 @@ do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
 
-    stateManager:setState(GameState.DRAWING)
+    stateManager:setState(GameState.GameState.DRAWING)
 
     local initialAttacker = game.currentAttacker
     local initialDefender = game.currentDefender
@@ -545,7 +551,7 @@ do
     loop:handleDrawingState()
 
     assert(game.currentAttacker == initialDefender, "Defender should become new attacker after winning")
-    assert(stateManager:getState() == GameState.READY, "Should return to READY state")
+    assert(stateManager:getState() == GameState.GameState.READY, "Should return to READY state")
 end
 
 -- Test 26: Drawing State - Defender Takes Cards
@@ -554,7 +560,7 @@ do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
 
-    stateManager:setState(GameState.DRAWING)
+    stateManager:setState(GameState.GameState.DRAWING)
 
     local initialAttacker = game.currentAttacker
 
@@ -567,7 +573,7 @@ do
     loop:handleDrawingState()
 
     assert(game.currentAttacker == initialAttacker, "Attacker should remain same when defender takes cards")
-    assert(stateManager:getState() == GameState.READY, "Should return to READY state")
+    assert(stateManager:getState() == GameState.GameState.READY, "Should return to READY state")
 end
 
 -- Test 27: onCardClicked - THROWING State Attack
@@ -576,11 +582,12 @@ do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
 
-    stateManager:setState(GameState.THROWING)
+    stateManager:setState(GameState.GameState.THROWING)
     game.currentAttacker = 1  -- Human player
 
-    -- Give human player a card
+    -- Clear hand and give human player a single card
     local player1 = game.players[1]
+    player1:clearHand()
     local testCard = card.createCard(card.Suit.SPADES, card.Rank.SIX)
     player1:addCard(testCard)
 
@@ -590,7 +597,7 @@ do
 
     assert(player1:handSize() == initialHandSize - 1, "Card should be removed from hand")
     assert(game.attackCards[1] ~= nil, "Card should be added to attack cards")
-    assert(stateManager:getState() == GameState.THROWN, "Should transition to THROWN state")
+    assert(stateManager:getState() == GameState.GameState.THROWN, "Should transition to THROWN state")
 end
 
 -- Test 28: onCardClicked - BEATING State Defense
@@ -599,15 +606,16 @@ do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
 
-    stateManager:setState(GameState.BEATING)
+    stateManager:setState(GameState.GameState.BEATING)
     game.currentDefender = 1  -- Human player
     game.trumpSuit = card.Suit.HEARTS
 
     -- Set up attack card
     game.attackCards[1] = card.createCard(card.Suit.SPADES, card.Rank.SIX)
 
-    -- Give human player a beating card
+    -- Clear hand and give human player a beating card
     local player1 = game.players[1]
+    player1:clearHand()
     local beatingCard = card.createCard(card.Suit.SPADES, card.Rank.KING)
     player1:addCard(beatingCard)
 
@@ -617,7 +625,7 @@ do
 
     assert(player1:handSize() == initialHandSize - 1, "Card should be removed from hand")
     assert(game.defenseCards[1] ~= nil, "Card should be added to defense cards")
-    assert(stateManager:getState() == GameState.BEATEN, "Should transition to BEATEN state")
+    assert(stateManager:getState() == GameState.GameState.BEATEN, "Should transition to BEATEN state")
     assert(loop.waitingForDefender == false, "waitingForDefender should be reset")
 end
 
@@ -627,14 +635,14 @@ do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
 
-    stateManager:setState(GameState.THROWN)
+    stateManager:setState(GameState.GameState.THROWN)
     game.currentDefender = 1  -- Human player
     loop.waitingForDefender = true
 
     loop:onTakeCards()
 
     assert(loop.waitingForDefender == false, "waitingForDefender should be reset")
-    assert(stateManager:getState() == GameState.DRAWING, "Should transition to DRAWING state")
+    assert(stateManager:getState() == GameState.GameState.DRAWING, "Should transition to DRAWING state")
 end
 
 -- Test 30: onDone - Player Finished Throwing Additional
@@ -643,7 +651,7 @@ do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
 
-    stateManager:setState(GameState.BEATEN)
+    stateManager:setState(GameState.GameState.BEATEN)
     game.currentDefender = 2  -- Not human
     game.playerDoneStatuses[1] = false
 
@@ -660,11 +668,11 @@ do
     loop:initialize()
 
     -- Set to READY and update multiple times
-    stateManager:setState(GameState.READY)
+    stateManager:setState(GameState.GameState.READY)
     loop:update(0.1)
 
     -- Should transition to THROWING
-    assert(stateManager:getState() == GameState.THROWING, "Should transition from READY to THROWING")
+    assert(stateManager:getState() == GameState.GameState.THROWING, "Should transition from READY to THROWING")
 end
 
 -- Test 32: Invalid State Handling
@@ -674,7 +682,7 @@ do
     local loop = GameLoop.create(game, stateManager, modules)
 
     -- Try to handle THROWN state when defender clicks card (should require BEATING state)
-    stateManager:setState(GameState.THROWN)
+    stateManager:setState(GameState.GameState.THROWN)
     game.currentDefender = 1
 
     local player1 = game.players[1]
@@ -693,7 +701,7 @@ do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
 
-    stateManager:setState(GameState.DRAWING)
+    stateManager:setState(GameState.GameState.DRAWING)
 
     -- Mark players as done
     game.playerDoneStatuses[1] = true
@@ -736,7 +744,7 @@ do
     local loop = GameLoop.create(game, stateManager, modules)
 
     loop.gameOver = true
-    stateManager:setState(GameState.THROWN)
+    stateManager:setState(GameState.GameState.THROWN)
     game.currentDefender = 1
 
     local initialState = stateManager:getState()
