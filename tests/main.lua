@@ -70,7 +70,10 @@ function love.load()
     
     -- Run Rendering tests
     require("rendering_test_love")
-    
+
+    -- Run Game Loop tests
+    require("game_loop_test_love")
+
     -- Print results
     print("\n" .. string.rep("=", 50))
     print(string.format("Passed: %d, Failed: %d, Total: %d", 
