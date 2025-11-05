@@ -559,7 +559,7 @@ function GameLoop.create(game, stateManager, modules)
         if state == GameState.THROWN and self.game.currentDefender == 1 then
             -- Human defender gives up
             self.waitingForDefender = false
-            self.stateManager:setState(GameState.DRAWING)
+            self.stateManager:setState(GameState.BEATEN)
         end
     end
     

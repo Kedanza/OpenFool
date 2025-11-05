@@ -106,8 +106,10 @@ print("\n--- THROWN → BEATING Transition Tests ---")
 do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
+    loop:initialize() -- State is READY
 
-    stateManager:setState(GameState.GameState.THROWN)
+    stateManager:setState(GameState.GameState.THROWING) -- READY -> THROWING
+    stateManager:setState(GameState.GameState.THROWN) -- THROWING -> THROWN
     loop:handleThrownState()
 
     assert(stateManager:getState() == GameState.GameState.BEATING, "Should transition to BEATING state")
@@ -581,8 +583,9 @@ print("\n--- onCardClicked Attack Tests ---")
 do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
+    loop:initialize() -- State is READY
 
-    stateManager:setState(GameState.GameState.THROWING)
+    stateManager:setState(GameState.GameState.THROWING) -- READY -> THROWING
     game.currentAttacker = 1  -- Human player
 
     -- Clear hand and give human player a single card
@@ -605,8 +608,11 @@ print("\n--- onCardClicked Defense Tests ---")
 do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
+    loop:initialize() -- State is READY
 
-    stateManager:setState(GameState.GameState.BEATING)
+    stateManager:setState(GameState.GameState.THROWING) -- READY -> THROWING
+    stateManager:setState(GameState.GameState.THROWN) -- THROWING -> THROWN
+    stateManager:setState(GameState.GameState.BEATING) -- THROWN -> BEATING
     game.currentDefender = 1  -- Human player
     game.trumpSuit = card.Suit.HEARTS
 
@@ -634,12 +640,22 @@ print("\n--- onTakeCards Tests ---")
 do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
+    loop:initialize() -- State is READY
 
-    stateManager:setState(GameState.GameState.THROWN)
+    stateManager:setState(GameState.GameState.THROWING) -- READY -> THROWING
+    stateManager:setState(GameState.GameState.THROWN) -- THROWING -> THROWN
     game.currentDefender = 1  -- Human player
     loop.waitingForDefender = true
 
+    -- Mark other players as done so canAnyoneThrowMore returns false
+    for i = 1, #game.players do
+        if i ~= game.currentDefender then
+            game.playerDoneStatuses[i] = true
+        end
+    end
+
     loop:onTakeCards()
+    loop:update(0.1) -- Simulate game loop continuing
 
     assert(loop.waitingForDefender == false, "waitingForDefender should be reset")
     assert(stateManager:getState() == GameState.GameState.DRAWING, "Should transition to DRAWING state")
@@ -650,8 +666,12 @@ print("\n--- onDone Tests ---")
 do
     local game, stateManager, modules = createTestGame()
     local loop = GameLoop.create(game, stateManager, modules)
+    loop:initialize() -- State is READY
 
-    stateManager:setState(GameState.GameState.BEATEN)
+    stateManager:setState(GameState.GameState.THROWING) -- READY -> THROWING
+    stateManager:setState(GameState.GameState.THROWN) -- THROWING -> THROWN
+    stateManager:setState(GameState.GameState.BEATING) -- THROWN -> BEATING
+    stateManager:setState(GameState.GameState.BEATEN) -- BEATING -> BEATEN
     game.currentDefender = 2  -- Not human
     game.playerDoneStatuses[1] = false
 
