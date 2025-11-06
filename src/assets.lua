@@ -35,7 +35,15 @@ local SUIT_NAMES = {
 -- Load all assets
 function Assets.load()
     print("Loading assets...")
-    
+
+    -- Debug: Check if asset directories exist
+    local deck_info = love.filesystem.getInfo(DECK_PATH)
+    print("Debug: DECK_PATH = " .. DECK_PATH)
+    print("Debug: Deck dir exists? " .. tostring(deck_info ~= nil))
+    if deck_info then
+        print("Debug: Deck dir type = " .. deck_info.type)
+    end
+
     -- Load card images
     Assets.loadCards()
     
@@ -59,28 +67,50 @@ end
 -- Load all 52 card images
 function Assets.loadCards()
     local count = 0
-    
+
     -- Load cards for each rank (1-13) and suit (s, d, c, h)
     for rank = 1, 13 do
         for suit = 0, 3 do
             local suitLetter = SUIT_LETTERS[suit]
             local filename = rank .. suitLetter .. ".png"
             local filepath = DECK_PATH .. filename
-            
+
             -- Create key for this card (e.g., "1-0", "13-3")
             local key = rank .. "-" .. suit
-            
+
             -- Try to load the image
-            local success, image = pcall(love.graphics.newImage, filepath)
+            local success, image_or_err = pcall(love.graphics.newImage, filepath)
             if success then
-                Assets.cards[key] = image
+                Assets.cards[key] = image_or_err
                 count = count + 1
             else
-                print("Warning: Could not load card: " .. filepath)
+                -- If Love2D filesystem can't find it, use native Lua io
+                -- This works in test environment where Love2D filesystem is restricted
+                local native_file = io.open(filepath, "rb")
+                if native_file then
+                    local filedata = native_file:read("*all")
+                    native_file:close()
+
+                    -- Create ImageData from the raw file data
+                    local success2, image2 = pcall(function()
+                        local imageData = love.image.newImageData(love.data.newByteData(filedata))
+                        return love.graphics.newImage(imageData)
+                    end)
+
+                    if success2 then
+                        Assets.cards[key] = image2
+                        count = count + 1
+                    else
+                        print("Warning: File exists but could not load: " .. filepath)
+                        print("  Error: " .. tostring(image2))
+                    end
+                else
+                    print("Warning: File not found: " .. filepath)
+                end
             end
         end
     end
-    
+
     print("  Loaded " .. count .. " card images")
 end
 
@@ -92,28 +122,62 @@ function Assets.loadCardBack()
         Assets.cardBack = image
         print("  Loaded card back")
     else
-        print("Warning: Could not load card back: " .. filepath)
+        -- Try native Lua io fallback
+        local native_file = io.open(filepath, "rb")
+        if native_file then
+            local filedata = native_file:read("*all")
+            native_file:close()
+            local success2, image2 = pcall(function()
+                local imageData = love.image.newImageData(love.data.newByteData(filedata))
+                return love.graphics.newImage(imageData)
+            end)
+            if success2 then
+                Assets.cardBack = image2
+                print("  Loaded card back (via native io)")
+            else
+                print("Warning: Could not load card back: " .. filepath)
+            end
+        else
+            print("Warning: Could not load card back: " .. filepath)
+        end
     end
 end
 
 -- Load suit symbol images
 function Assets.loadSuits()
     local count = 0
-    
+
     for suit = 0, 3 do
         local suitName = SUIT_NAMES[suit]
         local filename = suitName .. ".png"
         local filepath = SUITS_PATH .. filename
-        
+
         local success, image = pcall(love.graphics.newImage, filepath)
         if success then
             Assets.suits[suit] = image
             count = count + 1
         else
-            print("Warning: Could not load suit: " .. filepath)
+            -- Try native Lua io fallback
+            local native_file = io.open(filepath, "rb")
+            if native_file then
+                local filedata = native_file:read("*all")
+                native_file:close()
+                local success2, image2 = pcall(function()
+                    local imageData = love.image.newImageData(love.data.newByteData(filedata))
+                    return love.graphics.newImage(imageData)
+                end)
+                if success2 then
+                    Assets.suits[suit] = image2
+                    count = count + 1
+                else
+                    print("Warning: Could not load suit: " .. filepath)
+                end
+            else
+                print("Warning: Could not load suit: " .. filepath)
+            end
         end
     end
-    
+
     print("  Loaded " .. count .. " suit symbols")
 end
 
@@ -125,7 +189,24 @@ function Assets.loadBackground()
         Assets.background = image
         print("  Loaded background")
     else
-        print("Warning: Could not load background: " .. filepath)
+        -- Try native Lua io fallback
+        local native_file = io.open(filepath, "rb")
+        if native_file then
+            local filedata = native_file:read("*all")
+            native_file:close()
+            local success2, image2 = pcall(function()
+                local imageData = love.image.newImageData(love.data.newByteData(filedata))
+                return love.graphics.newImage(imageData)
+            end)
+            if success2 then
+                Assets.background = image2
+                print("  Loaded background (via native io)")
+            else
+                print("Warning: Could not load background: " .. filepath)
+            end
+        else
+            print("Warning: Could not load background: " .. filepath)
+        end
     end
 end
 

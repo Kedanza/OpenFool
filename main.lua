@@ -10,15 +10,28 @@ local game = nil
 
 -- Love2D Callbacks
 function love.load()
+    -- Debug filesystem info
+    print("=== Love2D Filesystem Debug ===")
+    print("Source: " .. love.filesystem.getSource())
+    print("Identity: " .. (love.filesystem.getIdentity() or "none"))
+    print("Save directory: " .. love.filesystem.getSaveDirectory())
+
+    -- Check what we can see
+    local android_exists = love.filesystem.getInfo("android")
+    print("android/ exists? " .. tostring(android_exists ~= nil))
+    if android_exists then
+        print("android/ type: " .. android_exists.type)
+    end
+
     -- Set up graphics defaults
     love.graphics.setBackgroundColor(0.2, 0.5, 0.3) -- Green table color
     love.graphics.setDefaultFilter("linear", "linear")
-    
+
     -- Initialize random seed
     math.randomseed(os.time())
-    
+
     -- Load assets
-    print("Loading assets...")
+    print("\n=== Loading Assets ===")
     local Assets = require("src.assets")
     Assets.load()
     

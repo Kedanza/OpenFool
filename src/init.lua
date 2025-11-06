@@ -132,52 +132,54 @@ function Game.new()
             
             -- Draw players' hands
             local numPlayers = #self.currentGame.players
-            
+            local baseScale = Rendering.getBaseScale()
+
             -- Human player at bottom (player 1)
             local player1 = self.currentGame.players[1]
             Rendering.drawPlayerHand(player1.hand, screenWidth / 2, screenHeight - 120, {
                 faceUp = true,
-                maxWidth = 500,
+                maxWidth = screenWidth * 0.625,  -- 62.5% of screen width
+                scale = baseScale,
                 selectedIndex = self.selectedCardIndex
             })
-            
+
             -- Draw trump card indicator
-            Rendering.drawTrump(self.currentGame.trumpCard, screenWidth - 100, 20, self.currentGame.deck:remaining())
-            
+            Rendering.drawTrump(self.currentGame.trumpCard, screenWidth - 100, 20, self.currentGame.deck:remaining(), baseScale * 0.7)
+
             -- Draw table (attack and defense cards)
             Rendering.drawTable(self.currentGame.attackCards, self.currentGame.defenseCards, screenWidth / 2, screenHeight / 2, {
-                scale = 1.0,
-                spacing = 130
+                scale = baseScale * 1.1,  -- Slightly larger for table cards
+                spacing = 130 * baseScale
             })
-            
+
             -- Draw opponent hands (face down)
             if numPlayers >= 2 then
                 -- Player 2 at top
                 local player2 = self.currentGame.players[2]
                 Rendering.drawPlayerHand(player2.hand, screenWidth / 2, 120, {
                     faceUp = false,
-                    maxWidth = 400,
-                    scale = 0.6
+                    maxWidth = screenWidth * 0.5,  -- 50% of screen width
+                    scale = baseScale * 0.85  -- Slightly smaller for opponents
                 })
             end
-            
+
             if numPlayers >= 3 then
                 -- Player 3 at left
                 local player3 = self.currentGame.players[3]
                 Rendering.drawPlayerHand(player3.hand, 150, screenHeight / 2, {
                     faceUp = false,
-                    maxWidth = 300,
-                    scale = 0.6
+                    maxWidth = screenWidth * 0.375,  -- 37.5% of screen width
+                    scale = baseScale * 0.85
                 })
             end
-            
+
             if numPlayers >= 4 then
                 -- Player 4 at right
                 local player4 = self.currentGame.players[4]
                 Rendering.drawPlayerHand(player4.hand, screenWidth - 150, screenHeight / 2, {
                     faceUp = false,
-                    maxWidth = 300,
-                    scale = 0.6
+                    maxWidth = screenWidth * 0.375,  -- 37.5% of screen width
+                    scale = baseScale * 0.85
                 })
             end
             
@@ -283,38 +285,38 @@ function Game.new()
         if not self.currentGame or not self.gameLoop or self.gameLoop.gameOver then
             return
         end
-        
+
         if button == 1 then  -- Left click
             -- Check if clicking on player 1's hand (human player)
             local screenWidth = love.graphics.getWidth()
             local screenHeight = love.graphics.getHeight()
             local player = self.currentGame.players[1]
-            
+
             -- Calculate hand position (same as in draw)
             local handX = screenWidth / 2
             local handY = screenHeight - 120
-            local maxWidth = 500
-            local cardScale = 0.7
-            
+            local maxWidth = screenWidth * 0.625  -- Match draw function
+            local cardScale = Rendering.getBaseScale()  -- Use responsive scale
+
             -- Check each card in hand
             local handSize = #player.hand
             if handSize > 0 then
                 local totalWidth = math.min(maxWidth, handSize * Rendering.getCardWidth() * cardScale)
                 local spacing = totalWidth / math.max(1, handSize - 1)
                 if handSize == 1 then spacing = 0 end
-                
+
                 local startX = handX - totalWidth / 2
-                
+
                 for i = 1, handSize do
                     local cardX = startX + (i - 1) * spacing
                     local cardY = handY
-                    
+
                     -- Apply fan arc
                     local t = (i - 1) / math.max(1, handSize - 1)
                     if handSize == 1 then t = 0.5 end
                     local arc = math.sin(t * math.pi) * 20
                     cardY = cardY - arc
-                    
+
                     -- Check if click is on this card
                     if Rendering.isPointInCard(x, y, cardX, cardY, cardScale) then
                         self.gameLoop:onCardClicked(i)
@@ -333,6 +335,8 @@ function Game.new()
     -- Handle window resize
     function self:resize(w, h)
         print("Window resized to: " .. w .. "x" .. h)
+        -- Update card scaling for new screen size
+        Rendering.updateScale()
     end
     
     return self

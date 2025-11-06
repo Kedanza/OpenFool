@@ -21,8 +21,38 @@ function assert(condition, message)
 end
 
 function love.load()
+    _G.IS_TEST_ENVIRONMENT = true
     print("\n=== Love2D Test Runner ===\n")
-    
+
+    -- Debug filesystem paths
+    local source_dir = love.filesystem.getSource()
+    print("Debug: Source directory = " .. source_dir)
+    print("Debug: Working directory = " .. love.filesystem.getWorkingDirectory())
+
+    -- Mount the source base directory to access parent folders
+    -- In Love2D 11.4+, we can mount getSourceBaseDirectory() which gives us
+    -- access to the project root when running "love tests/"
+    local source_base = love.filesystem.getSourceBaseDirectory()
+    print("Debug: Source base directory = " .. tostring(source_base))
+
+    if source_base then
+        print("Debug: Attempting to mount source base: " .. source_base)
+        local success = love.filesystem.mount(source_base, "")
+        print("Debug: Mount success: " .. tostring(success))
+
+        -- Verify we can now see android/
+        local android_info = love.filesystem.getInfo("android")
+        print("Debug: android/ accessible after mount? " .. tostring(android_info ~= nil))
+
+        if android_info then
+            print("Debug: ✓ SUCCESS! android/ is now accessible via source base mount")
+        else
+            print("Debug: ✗ android/ still not accessible")
+        end
+    else
+        print("Debug: getSourceBaseDirectory returned nil")
+    end
+
     -- Add parent directory to package path to find src/ and root files
     package.path = package.path .. ";../src/?.lua;./src/?.lua;../?.lua;./?.lua"
     

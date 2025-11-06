@@ -200,18 +200,16 @@ All test files follow this pattern:
 -- tests/{module}_test_love.lua
 require("src.{module}")
 
-print("
-=== Module Name Tests ===")
+print("\n=== Module Name Tests ===")
 
-print("
---- Feature Category ---")
+print("\n--- Feature Category ---")
 assert(condition, "Descriptive message in present tense")
 assert(value == expected, "What should be true")
 ```
 
 ### Test Guidelines
 - Use global `assert()` function (counts tests automatically)
-- Group tests with headers: `=== Main ===` and `--- Category ---`
+- Group tests with headers: `=== Main ===` and `--- Category ---
 - Write messages in present tense: "Card should beat lower rank"
 - Each `assert()` call increments the global test counter
 - See `tests/TEST_GUIDELINES.md` for comprehensive patterns
@@ -252,7 +250,7 @@ assert(value == expected, "What should be true")
 
 9. **Update GitHub issue:** Check off completed acceptance criteria
 
-10. **Update docs:** Update `PROGRESS.md` with test counts
+10. **Update docs:** Update `PROGRESS.md` with new test counts
 
 ### Creating Pull Requests
 
@@ -420,3 +418,85 @@ Key translation principles:
 - `main.lua` - Love2D entry point
 - `conf.lua` - Love2D configuration
 - `docs/guides/` - Implementation guides
+
+## Capturing Test Output on Windows
+
+A critical issue was discovered on Windows where the console output of Love2D cannot be captured by standard shell redirection. This prevents direct analysis of `love tests/` output.
+
+**The Problem:**
+
+- Love2D, as a GUI application, does not write to the standard `stdout` or `stderr` streams that are captured by shell commands in PowerShell.
+- Simple redirection (`> file.txt`) results in an empty file.
+
+**The Solution:**
+
+A reliable workaround is to use `cmd.exe` to launch `lovec.exe` (the console-enabled version of Love2D) and use `cmd.exe`'s redirection capabilities.
+
+**Standard Operating Procedure for Running Tests:**
+
+### Method 1: Direct Console Output (Recommended for Quick Checks)
+
+**Use this command to view test output directly in the console:**
+
+```bash
+powershell -Command "Start-Process -FilePath 'C:\Program Files\LOVE\lovec.exe' -ArgumentList 'tests/', '--console' -NoNewWindow -Wait"
+```
+
+**When to use:**
+- Quick test runs during development
+- Immediate feedback on specific test failures
+- When you need to see output right away
+
+**Advantages:**
+- Fast - no file I/O
+- Output appears in console immediately
+- Works reliably in Claude Code CLI
+
+**Limitations:**
+- Output may be truncated if very long
+- Cannot save results for later analysis
+
+---
+
+### Method 2: File Output (For Complete Test Records)
+
+**Use this command to save complete test output to a file:**
+
+```bash
+cmd.exe /c "lovec tests/ > logs\YYYY-MM-DD_runN.txt 2>&1"
+```
+
+**File Naming Convention:**
+- Replace `YYYY-MM-DD` with the current date (e.g., `2025-10-31`)
+- Replace `N` with a sequential run number for that day (e.g., `2025-10-31_run1.txt`)
+- Files are saved in the `logs/` folder
+
+**When to use:**
+- Complete test suite runs
+- When output is expected to be very long
+- For permanent test records
+- For detailed analysis of test failures
+
+**Handling Large Output:**
+- Test outputs can be large. If a file exceeds 5KB, read in chunks to avoid overwhelming context
+- If splitting is necessary, use a `_partM` suffix (e.g., `logs/2025-10-31_run1_part1.txt`)
+
+---
+
+
+### Quick Reference
+
+```bash
+# Quick check - direct output
+powershell -Command "Start-Process -FilePath 'C:\Program Files\LOVE\lovec.exe' -ArgumentList 'tests/', '--console' -NoNewWindow -Wait"
+
+# Full record - save to logs folder
+cmd.exe /c "lovec tests/ > logs\2025-10-31_run1.txt 2>&1"
+
+# Read the saved log file
+cat logs/2025-10-31_run1.txt
+```
+
+**Note:** The `logs/` folder is gitignored to prevent committing test outputs to the repository.
+
+This procedure ensures that all test output is reliably captured and can be analyzed.
