@@ -4,10 +4,17 @@
 function love.conf(t)
     -- Game identity (for save directory)
     t.identity = "openfool"
-    
+
     -- Version requirements
     t.version = "11.4"
-    t.console = false
+    t.console = true  -- Enable console for debugging
+
+    -- Allow symlinks and external storage (for development/testing)
+    t.accelerometerjoystick = false
+
+    -- Append identity to search path
+    -- This helps with finding files in development
+    t.appendidentity = false
     
     -- Window configuration
     t.window.title = "OpenFool - Durak Card Game"

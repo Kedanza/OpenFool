@@ -10,6 +10,12 @@ local Assets = require("src.assets")
 -- Card dimensions (from loaded images)
 local CARD_WIDTH = nil
 local CARD_HEIGHT = nil
+local BASE_SCALE = nil  -- Calculated scale to make cards responsive
+
+-- Fixed target card height in pixels
+-- At 800x600, we want scale ~0.50, which gives us 270px tall cards (540 * 0.50)
+-- This same pixel size should be maintained across all screen sizes
+local TARGET_CARD_HEIGHT_PIXELS = 270  -- Fixed height in pixels regardless of screen size
 
 -- Initialize card dimensions from loaded assets
 function Rendering.initialize()
@@ -17,13 +23,37 @@ function Rendering.initialize()
     if sampleCard then
         CARD_WIDTH = sampleCard:getWidth()
         CARD_HEIGHT = sampleCard:getHeight()
-        print("Card dimensions: " .. CARD_WIDTH .. "x" .. CARD_HEIGHT)
+        print("Native card dimensions: " .. CARD_WIDTH .. "x" .. CARD_HEIGHT)
     else
         -- Fallback dimensions
         CARD_WIDTH = 71
         CARD_HEIGHT = 96
         print("Warning: Using fallback card dimensions")
     end
+
+    -- Calculate base scale based on screen height
+    Rendering.updateScale()
+end
+
+-- Update card scale based on current screen size
+-- Cards maintain a fixed pixel size, so they appear SMALLER on larger screens
+-- This is responsive: small screens get appropriately sized cards, large screens don't get overwhelmed
+function Rendering.updateScale()
+    local screenHeight = love.graphics.getHeight()
+    local screenWidth = love.graphics.getWidth()
+
+    -- Calculate scale to achieve fixed pixel height
+    -- On 800x600: 270px / 540px = 0.50 scale
+    -- On 1920x1080: still 270px / 540px = 0.50 scale (cards stay same size, relatively smaller on screen)
+    BASE_SCALE = TARGET_CARD_HEIGHT_PIXELS / CARD_HEIGHT
+
+    print(string.format("Screen: %dx%d, Card scale: %.2f (card height: %dpx)",
+        screenWidth, screenHeight, BASE_SCALE, TARGET_CARD_HEIGHT_PIXELS))
+end
+
+-- Get the current base scale for cards
+function Rendering.getBaseScale()
+    return BASE_SCALE or 0.2
 end
 
 -- Draw a single card
@@ -43,7 +73,7 @@ function Rendering.drawCard(card, x, y, options)
     local faceUp = options.faceUp ~= false -- default true
     local alpha = options.alpha or 1.0
     local highlight = options.highlight or false
-    
+
     -- Get the appropriate image
     local image
     if faceUp and card then
@@ -96,7 +126,7 @@ function Rendering.drawPlayerHand(hand, x, y, options)
     local scale = options.scale or 0.7
     local fanAngle = options.fanAngle or 0.3
     local selectedIndex = options.selectedIndex
-    
+
     if not hand or #hand == 0 then
         return
     end
@@ -209,29 +239,32 @@ end
 -- @param x number X position
 -- @param y number Y position
 -- @param deckSize number Number of cards remaining in deck
-function Rendering.drawTrump(trumpCard, x, y, deckSize)
+-- @param scale number Optional scale factor (default 0.6)
+function Rendering.drawTrump(trumpCard, x, y, deckSize, scale)
+    scale = scale or 0.6
+
     if not trumpCard then
         return
     end
-    
+
     -- Draw deck pile (card back)
     Rendering.drawCard(nil, x, y, {
-        scale = 0.6,
+        scale = scale,
         faceUp = false,
         rotation = math.pi / 2 -- Rotated 90 degrees
     })
-    
+
     -- Draw trump card underneath (slightly visible)
-    Rendering.drawCard(trumpCard, x - 30, y, {
-        scale = 0.6,
+    Rendering.drawCard(trumpCard, x - 30 * scale, y, {
+        scale = scale,
         faceUp = true,
         rotation = math.pi / 2
     })
-    
+
     -- Draw deck count
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.setFont(Assets.getFont("normal"))
-    love.graphics.print(deckSize, x + 40, y - 8)
+    love.graphics.print(deckSize, x + 40 * scale, y - 8)
 end
 
 -- Draw centered text with font

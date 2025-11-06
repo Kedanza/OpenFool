@@ -41,12 +41,19 @@ assert(height > 0, 'card height should be positive')
 
 -- Test point in card function
 print('\n--- Point in Card Tests ---')
+print('Debug: Card dimensions = ' .. tostring(width) .. 'x' .. tostring(height))
+
 -- Test center point (should be inside)
 local inside = rendering.isPointInCard(0, 0, 0, 0, 1.0)
+print('Debug: isPointInCard(0, 0, 0, 0, 1.0) = ' .. tostring(inside))
 assert(inside == true, 'center point should be inside card')
 
--- Test point outside card
-local outside = rendering.isPointInCard(100, 100, 0, 0, 1.0)
+-- Test point outside card (use a point that's definitely outside real card dimensions)
+-- Real card dimensions are 360x540, so bounds are ±180 x ±270
+-- Use point (500, 500) to be well outside
+local outside = rendering.isPointInCard(500, 500, 0, 0, 1.0)
+print('Debug: isPointInCard(500, 500, 0, 0, 1.0) = ' .. tostring(outside))
+print('Debug: Expected bounds: X=' .. tostring(-width/2) .. ' to ' .. tostring(width/2) .. ', Y=' .. tostring(-height/2) .. ' to ' .. tostring(height/2))
 assert(outside == false, 'distant point should be outside card')
 
 -- Test scaled card

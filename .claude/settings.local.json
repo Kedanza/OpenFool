@@ -4,7 +4,10 @@
       "Bash(tree:*)",
       "Bash(cat:*)",
       "Bash(gh issue view:*)",
-      "Bash(gh issue list:*)"
+      "Bash(gh issue list:*)",
+      "Bash(love tests --console:*)",
+      "Bash(gh issue close:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []
