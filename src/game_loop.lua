@@ -301,9 +301,13 @@ function GameLoop.create(game, stateManager, modules)
             -- AI chooses to take all cards
             print("AI Player " .. defenderIndex .. " is taking cards")
             
-            -- Transition to DRAWING (defender failed)
+            -- Transition to BEATEN first (defender failed), then will go to DRAWING
             self.waitingForDefender = false
-            self.stateManager:setState(self.modules.GameState.DRAWING)
+            self.stateManager:setState(self.modules.GameState.BEATEN)
+            -- Mark all players as done so we go straight to DRAWING
+            for i = 1, #self.game.players do
+                self.game.playerDoneStatuses[i] = true
+            end
         else
             -- AI beats with the returned card
             print("AI Player " .. defenderIndex .. " defending with: " .. result:toString())
@@ -556,10 +560,16 @@ function GameLoop.create(game, stateManager, modules)
         local state = self.stateManager:getState()
         local GameState = self.modules.GameState
         
-        if state == GameState.THROWN and self.game.currentDefender == 1 then
+        -- Defender can take cards in THROWN or BEATING state
+        if (state == GameState.THROWN or state == GameState.BEATING) and self.game.currentDefender == 1 then
             -- Human defender gives up
             self.waitingForDefender = false
+            -- Transition to BEATEN first, then will go to DRAWING
             self.stateManager:setState(GameState.BEATEN)
+            -- Mark all players as done so we go straight to DRAWING
+            for i = 1, #self.game.players do
+                self.game.playerDoneStatuses[i] = true
+            end
         end
     end
     
